@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Load D3.js library from CDN -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  
+  <!-- Load p5.js for interactive floor plan drawing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+  
+  <!-- Load Chart.js for data visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <meta charset="UTF-8">
+  <title>AI Home Energy Coach</title>
+  
+  <!-- Load the Inter font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Link our CSS file to style the page -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Header section -->
+  <header>
+    <div class="left">Columbia GSAPP</div>
+    <div class="center">
+      AI Home Energy Coach<br>
+      <span>Toward Accessible, Data-Driven Energy Literacy</span>
+    </div>
+    <div class="right">Computational Design Practices</div>
+  </header>
+
+  <!-- Main content area -->
+  <main>
+    <!-- Project Overview -->
+    <div class="project-title-main">AI Home Energy Coach</div>
+    <div class="section-content" style="text-align: center; max-width: 600px; margin: 0 auto 2rem auto;">
+      An AI-powered tool that translates architectural layouts, usage behaviors, and environmental data into customized, actionable comfort strategies for renters and residents.
+    </div>
+
+    <!-- User Input Section -->
+    <div class="project-title">Your Home Profile</div>
+    <div class="input-section">
+      <div class="input-group">
+        <label for="zipcode">Zip Code (for climate data)</label>
+        <input type="text" id="zipcode" placeholder="e.g., 10027" maxlength="5">
+      </div>
+      
+      <div class="input-group">
+        <label for="building-type">Building Type</label>
+        <select id="building-type">
+          <option value="">Select building type</option>
+          <option value="apartment">Apartment</option>
+          <option value="house">House</option>
+          <option value="studio">Studio</option>
+          <option value="loft">Loft</option>
+        </select>
+      </div>
+      
+      <div class="input-group">
+        <label for="floor-plan">Floor Plan</label>
+        <div class="floor-plan-container">
+          <div id="p5-canvas"></div>
+          <div class="floor-plan-controls">
+            <button id="draw-room">Draw Room</button>
+            <button id="add-window">Add Window</button>
+            <button id="add-door">Add Door</button>
+            <button id="clear-canvas">Clear</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="input-group">
+        <label>Living Habits</label>
+        <div class="habits-grid">
+          <div class="habit-item">
+            <input type="checkbox" id="work-from-home">
+            <label for="work-from-home">Work from home 9-5</label>
+          </div>
+          <div class="habit-item">
+            <input type="checkbox" id="windows-open">
+            <label for="windows-open">Windows open at night</label>
+          </div>
+          <div class="habit-item">
+            <input type="checkbox" id="ac-high">
+            <label for="ac-high">AC on high after 6pm</label>
+          </div>
+          <div class="habit-item">
+            <input type="checkbox" id="cooking-frequent">
+            <label for="cooking-frequent">Frequent cooking</label>
+          </div>
+        </div>
+      </div>
+      
+      <button id="analyze-btn" class="analyze-button">ANALYZE MY HOME</button>
+    </div>
+
+    <!-- AI Recommendations Section -->
+    <div class="project-title">AI Energy Coach Recommendations</div>
+    <div id="recommendations-container" class="recommendations-section">
+      <div class="coach-message">
+        <div class="coach-avatar">🌱</div>
+        <div class="coach-text">
+          Hi! I'm your AI Energy Coach. Fill out your home profile above and I'll provide personalized recommendations to improve your comfort and reduce environmental impact.
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Visualization Section -->
+    <div class="project-title">Energy Insights</div>
+    <div class="visualization-section">
+      <div class="chart-container">
+        <h3>Temperature Profile</h3>
+        <canvas id="temperature-chart"></canvas>
+      </div>
+      <div class="chart-container">
+        <h3>Energy Usage</h3>
+        <canvas id="energy-usage-chart"></canvas>
+      </div>
+    </div>
+
+    <!-- Research Context -->
+    <div class="project-title">Research Context</div>
+    <div class="section-content">
+      This project addresses the growing need for accessible, AI-driven feedback tools that help everyday people improve their indoor comfort and reduce bills without requiring major renovation. It aligns with Data Feminism principles by shifting design agency toward residents and making energy knowledge transparent and contextual.
+    </div>
+    
+    <div class="project-title">Core Research Questions</div>
+    <div class="section-content">
+      <ul>
+        <li>How can AI models trained on architectural and environmental data provide meaningful suggestions for energy-saving behavior at the room or unit level?</li>
+        <li>Can we design a tool that gives micro-scale design advice to non-architects in plain language?</li>
+        <li>How might this tool integrate with citizen-collected data from sensors or simple user-reported habits?</li>
+      </ul>
+    </div>
+
+    <div class="project-title">Technology Stack</div>
+    <div class="section-content">
+      <strong>Frontend:</strong> p5.js for interactive floor plan drawing, D3.js for data visualizations, Chart.js for time-series graphs<br>
+      <strong>AI Engine:</strong> Pretrained models (XGBoost or lightweight neural nets) for predicting room-level heat gain/loss<br>
+      <strong>Data Sources:</strong> Local weather APIs, utility cost models, architectural data
+    </div>
+
+    <!-- Environmental Impact Section -->
+    <div class="project-title">Environmental Impact</div>
+    <div class="section-content">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+        <div style="background: #f0fdf4; padding: 1.5rem; border: 1px solid #bbf7d0; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌿</div>
+          <strong>Carbon Reduction</strong><br>
+          <small>Reduce household emissions by 20-30%</small>
+        </div>
+        <div style="background: #f0fdf4; padding: 1.5rem; border: 1px solid #bbf7d0; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">💰</div>
+          <strong>Cost Savings</strong><br>
+          <small>Lower energy bills by 15-25%</small>
+        </div>
+        <div style="background: #f0fdf4; padding: 1.5rem; border: 1px solid #bbf7d0; text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏠</div>
+          <strong>Comfort</strong><br>
+          <small>Improved indoor environmental quality</small>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Load our JavaScript file -->
+  <script src="main.js"></script>
+</body>
+</html>
