@@ -1,171 +1,697 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Load D3.js library from CDN -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Home Science Platform - Thermal Grammar</title>
+  <link rel="stylesheet" href="assets/css/shared.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
-  
-  <!-- Load p5.js for interactive floor plan drawing -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
-  
-  <!-- Load Chart.js for data visualizations -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <meta charset="UTF-8">
-  <title>AI Home Energy Coach</title>
-  
-  <!-- Load the Inter font from Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Link our CSS file to style the page -->
-  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <!-- Header section -->
   <header>
-    <div class="left">Columbia GSAPP</div>
-    <div class="center">
-      AI Home Energy Coach<br>
-      <span>Toward Accessible, Data-Driven Energy Literacy</span>
-    </div>
-    <div class="right">Computational Design Practices</div>
-  </header>
-
-  <!-- Main content area -->
-  <main>
-    <!-- Project Overview -->
-    <div class="project-title-main">AI Home Energy Coach</div>
-    <div class="section-content" style="text-align: center; max-width: 600px; margin: 0 auto 2rem auto;">
-      An AI-powered tool that translates architectural layouts, usage behaviors, and environmental data into customized, actionable comfort strategies for renters and residents.
-    </div>
-
-    <!-- User Input Section -->
-    <div class="project-title">Your Home Profile</div>
-    <div class="input-section">
-      <div class="input-group">
-        <label for="zipcode">Zip Code (for climate data)</label>
-        <input type="text" id="zipcode" placeholder="e.g., 10027" maxlength="5">
-      </div>
-      
-      <div class="input-group">
-        <label for="building-type">Building Type</label>
-        <select id="building-type">
-          <option value="">Select building type</option>
-          <option value="apartment">Apartment</option>
-          <option value="house">House</option>
-          <option value="studio">Studio</option>
-          <option value="loft">Loft</option>
-        </select>
-      </div>
-      
-      <div class="input-group">
-        <label for="floor-plan">Floor Plan</label>
-        <div class="floor-plan-container">
-          <div id="p5-canvas"></div>
-          <div class="floor-plan-controls">
-            <button id="draw-room">Draw Room</button>
-            <button id="add-window">Add Window</button>
-            <button id="add-door">Add Door</button>
-            <button id="clear-canvas">Clear</button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="input-group">
-        <label>Living Habits</label>
-        <div class="habits-grid">
-          <div class="habit-item">
-            <input type="checkbox" id="work-from-home">
-            <label for="work-from-home">Work from home 9-5</label>
-          </div>
-          <div class="habit-item">
-            <input type="checkbox" id="windows-open">
-            <label for="windows-open">Windows open at night</label>
-          </div>
-          <div class="habit-item">
-            <input type="checkbox" id="ac-high">
-            <label for="ac-high">AC on high after 6pm</label>
-          </div>
-          <div class="habit-item">
-            <input type="checkbox" id="cooking-frequent">
-            <label for="cooking-frequent">Frequent cooking</label>
-          </div>
-        </div>
-      </div>
-      
-      <button id="analyze-btn" class="analyze-button">ANALYZE MY HOME</button>
-    </div>
-
-    <!-- AI Recommendations Section -->
-    <div class="project-title">AI Energy Coach Recommendations</div>
-    <div id="recommendations-container" class="recommendations-section">
-      <div class="coach-message">
-        <div class="coach-avatar">🌱</div>
-        <div class="coach-text">
-          Hi! I'm your AI Energy Coach. Fill out your home profile above and I'll provide personalized recommendations to improve your comfort and reduce environmental impact.
-        </div>
-      </div>
-    </div>
-
-    <!-- Data Visualization Section -->
-    <div class="project-title">Energy Insights</div>
-    <div class="visualization-section">
-      <div class="chart-container">
-        <h3>Temperature Profile</h3>
-        <canvas id="temperature-chart"></canvas>
-      </div>
-      <div class="chart-container">
-        <h3>Energy Usage</h3>
-        <canvas id="energy-usage-chart"></canvas>
-      </div>
-    </div>
-
-    <!-- Research Context -->
-    <div class="project-title">Research Context</div>
-    <div class="section-content">
-      This project addresses the growing need for accessible, AI-driven feedback tools that help everyday people improve their indoor comfort and reduce bills without requiring major renovation. It aligns with Data Feminism principles by shifting design agency toward residents and making energy knowledge transparent and contextual.
+    <!-- Background Air Leaking Demo -->
+    <div id="background-demo"></div>
+    
+    <!-- Header Background Image -->
+    <div class="header-background">
+      <img src="Capston Header Background.svg" alt="Header Background" class="header-bg-image">
     </div>
     
-    <div class="project-title">Core Research Questions</div>
-    <div class="section-content">
-      <ul>
-        <li>How can AI models trained on architectural and environmental data provide meaningful suggestions for energy-saving behavior at the room or unit level?</li>
-        <li>Can we design a tool that gives micro-scale design advice to non-architects in plain language?</li>
-        <li>How might this tool integrate with citizen-collected data from sensors or simple user-reported habits?</li>
-      </ul>
+        <div class="header-content">
+      <h1>AI Home Science Platform</h1>
+      <p class="subtitle">Translating Building Science into Everyday Energy Advice</p>
+      <p class="author">Sara Lin | 2025 MSCDP | Summer Capstone Project</p>
     </div>
+  </header>
 
-    <div class="project-title">Technology Stack</div>
-    <div class="section-content">
-      <strong>Frontend:</strong> p5.js for interactive floor plan drawing, D3.js for data visualizations, Chart.js for time-series graphs<br>
-      <strong>AI Engine:</strong> Pretrained models (XGBoost or lightweight neural nets) for predicting room-level heat gain/loss<br>
-      <strong>Data Sources:</strong> Local weather APIs, utility cost models, architectural data
-    </div>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="pages/proposal/index.html">Proposal</a></li>
+      <li><a href="pages/methodology/index.html">Methodology</a></li>
+      <li><a href="pages/experiments/index.html">Design Experiments</a></li>
+      <li><a href="pages/demo/index.html">AI Demo</a></li>
+      
+    </ul>
+  </nav>
 
-    <!-- Environmental Impact Section -->
-    <div class="project-title">Environmental Impact</div>
-    <div class="section-content">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
-        <div style="background: #f0fdf4; padding: 1.5rem; border: 1px solid #bbf7d0; text-align: center;">
-          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌿</div>
-          <strong>Carbon Reduction</strong><br>
-          <small>Reduce household emissions by 20-30%</small>
+  <main>
+    <div class="page-content">
+      <section class="section">
+        <h3>WHAT IS IT?</h3>
+        <p>A computational design project that uses AI tools to translate architectural thermal behavior into accessible, localized energy guidance.</p>
+        <p>+ platform where users can upload their own data and share personalized energy reports with others.</p>
+      </section>
+
+      <section class="section">
+        <h3>DESIGN INTENTION</h3>
+        <p>Many urban residents have limited control over essential building systems such as HVAC, windows, and insulation, yet they are the ones most affected by high energy costs and uncomfortable indoor conditions. While energy modeling tools exist for new construction, residents of older or rental housing, especially in dense cities like New York or Los Angeles, often lack access to useful data, performance feedback, or strategies to improve their living environments.</p>
+        
+        <p>This project introduces a AI-powered tool designed to help everyday occupants better understand and enhance the energy performance of their buildings. Drawing on fundamental building science principles, including heat transfer, solar exposure, ventilation, and envelope behavior, the tool aims to make energy literacy more accessible and actionable for a broader public.</p>
+        
+        <p>After receiving personalized energy insights, users can choose whether to share their data with the platform. If they opt in, others can view their project information and learn from real-world examples, helping to foster a collaborative, citizen-driven approach to improving home energy.</p>
+      </section>
+
+      <section class="section">
+        <h3>WHY WE FEEL UNCOMFORTABLE IN THE SPACE?</h3>
+        <div class="ant-diagram-container">
+          <div class="diagram-wrapper">
+            <svg id="ant-graph" width="600" height="450"></svg>
+          </div>
         </div>
-        <div style="background: #f0fdf4; padding: 1.5rem; border: 1px solid #bbf7d0; text-align: center;">
-          <div style="font-size: 2rem; margin-bottom: 0.5rem;">💰</div>
-          <strong>Cost Savings</strong><br>
-          <small>Lower energy bills by 15-25%</small>
+      </section>
+
+      <section class="section section-moved-up">
+        <h3>WHY IS INDOOR THERMAL CONDITIONS IMPORTANT? WHY SHOULD WE BE AWARE OF?</h3>
+        <p>Indoor thermal conditions have a prominent influence on occupant health, performance, and satisfaction [1], [2], [3], and buildings consume substantial amounts of energy to maintain comfortable thermal conditions that support occupants and their activity.</p>
+      </section>
+
+      <section class="section section-moved-up">
+        <h3>ESTIMATED 10-YEAR HISTORY OF AVERAGE ELECTRIC BILL</h3>
+        <div class="energy-bill-chart">
+          <h4>Central Hudson Average Monthly Bills (2016–2024)</h4>
+          <div id="energy-bill-visualization"></div>
         </div>
-        <div style="background: #f0fdf4; padding: 1.5rem; border: 1px solid #bbf7d0; text-align: center;">
-          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏠</div>
-          <strong>Comfort</strong><br>
-          <small>Improved indoor environmental quality</small>
+      </section>
+
+      <section class="section section-moved-up">
+        <h3>WHAT ARE THE FACTORS THAT AFFECT ENERGY BILL?</h3>
+        <div class="factors-text">
+          <h4>Increase Electricity rates</h4>
+          <p>Rates fluctuate seasonally and tend to rise during summer and winter due to higher demand for heating and cooling.</p>
+          
+          <h4>Energy usage has increased</h4>
+          <p>Higher electricity consumption leads directly to a higher bill.</p>
+          
+          <h4>Energy plan may not match usage needs</h4>
+          <p>In deregulated markets, plans vary. High-usage homes need different plans than low-usage ones. Choosing the wrong plan can cost more.</p>
+          
+          <h4>Extreme weather or temperature spikes</h4>
+          <p>Sudden increases in demand during weather extremes can drive prices higher.</p>
+          
+          <h4>Home maintenance issues</h4>
+          <p>Poor insulation, air leaks, or an overworked HVAC system increase energy use.</p>
+          
+          <h4>Old or inefficient appliances</h4>
+          <p>Older devices often use more energy. ENERGY STAR–certified appliances are more efficient and cost-effective.</p>
         </div>
-      </div>
+      </section>
+      
+      <section class="section section-moved-up">
+        <h3>RHETORIC ARGUMENT</h3>
+        <p>This project challenges the idea that knowledge about energy and thermal comfort should be limited to experts. By using design to translate complex building and environmental data into simple, visual feedback, it makes energy impact understandable and accessible to everyone.</p>
+      </section>
     </div>
   </main>
 
-  <!-- Load our JavaScript file -->
-  <script src="main.js"></script>
+  <footer>
+    <div class="footer-content">
+      <p>© 2025 Sara Lin | 2025 MSCDP | Summer Capstone Project</p>
+      <p>"Understanding building energy behavior is the first step toward optimization."</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/shared.js"></script>
+  <script>
+    // ANT Diagram for Discomfort Factors
+    const antData = {
+      nodes: [
+        { id: "residents", name: "Residents", group: "human", x: 200, y: 300 },
+        { id: "building_managers", name: "Building Managers", group: "human", x: 400, y: 200 },
+        { id: "energy_advisors", name: "Energy Advisors", group: "human", x: 600, y: 300 },
+        { id: "policymakers", name: "Policymakers", group: "human", x: 400, y: 400 },
+        { id: "temperature_humidity", name: "Temperature & Humidity Issues", group: "environment", x: 300, y: 150 },
+        { id: "air_quality", name: "Poor Air Quality", group: "environment", x: 500, y: 150 },
+        { id: "noise_levels", name: "Excessive Noise", group: "environment", x: 100, y: 200 },
+        { id: "lighting_problems", name: "Inadequate Lighting", group: "environment", x: 700, y: 200 },
+        { id: "building_codes", name: "Building Codes", group: "policy", x: 600, y: 400 },
+        { id: "ai_tool", name: "AI Energy Advisor", group: "technology", x: 400, y: 300 }
+      ],
+      links: [
+        { source: "residents", target: "temperature_humidity", strength: 0.8 },
+        { source: "residents", target: "noise_levels", strength: 0.6 },
+        { source: "residents", target: "air_quality", strength: 0.7 },
+        { source: "building_managers", target: "temperature_humidity", strength: 0.9 },
+        { source: "building_managers", target: "air_quality", strength: 0.8 },
+        { source: "energy_advisors", target: "residents", strength: 0.6 },
+        { source: "energy_advisors", target: "building_managers", strength: 0.7 },
+        { source: "policymakers", target: "building_codes", strength: 0.9 },
+        { source: "policymakers", target: "lighting_problems", strength: 0.5 },
+        { source: "noise_levels", target: "temperature_humidity", strength: 0.8 },
+        { source: "air_quality", target: "temperature_humidity", strength: 0.4 },
+        { source: "lighting_problems", target: "residents", strength: 0.7 },
+        { source: "building_codes", target: "air_quality", strength: 0.8 },
+        { source: "ai_tool", target: "residents", strength: 0.9 },
+        { source: "ai_tool", target: "energy_advisors", strength: 0.6 },
+        { source: "ai_tool", target: "building_managers", strength: 0.5 },
+        { source: "ai_tool", target: "noise_levels", strength: 0.7 },
+        { source: "ai_tool", target: "building_codes", strength: 0.4 }
+      ]
+    };
+
+    // Color scheme for ANT diagram
+    const antColors = {
+      human: "#8BB3E8",      // Muted Blue
+      technology: "#F4A582",  // Muted Orange
+      environment: "#E8A5A5", // Muted Red
+      economic: "#F4A582",    // Muted Orange
+      policy: "#8BB3E8"      // Muted Blue
+    };
+
+    // Create ANT visualization
+    const antSvg = d3.select("#ant-graph");
+    const antWidth = +antSvg.attr("width");
+    const antHeight = +antSvg.attr("height");
+
+    // Create force simulation for ANT
+    const antSimulation = d3.forceSimulation(antData.nodes)
+      .force("link", d3.forceLink(antData.links).id(d => d.id).distance(100))
+      .force("charge", d3.forceManyBody().strength(-300))
+      .force("center", d3.forceCenter(antWidth / 2, antHeight / 2))
+      .force("collision", d3.forceCollide().radius(25));
+
+    // Create links for ANT
+    const antLink = antSvg.append("g")
+      .selectAll("line")
+      .data(antData.links)
+      .enter().append("line")
+      .attr("class", "link")
+      .style("stroke", "#535453")
+      .style("stroke-width", d => d.strength * 3);
+
+    // Create nodes for ANT
+    const antNode = antSvg.append("g")
+      .selectAll("g")
+      .data(antData.nodes)
+      .enter().append("g")
+      .attr("class", "node")
+      .call(d3.drag()
+        .on("start", antDragstarted)
+        .on("drag", antDragged)
+        .on("end", antDragended));
+
+    // Add circles to ANT nodes
+    antNode.append("circle")
+      .attr("r", 8)
+      .style("fill", d => antColors[d.group])
+      .style("stroke", "#535453")
+      .style("stroke-width", 1.5);
+
+    // Add labels to ANT nodes
+    antNode.append("text")
+      .text(d => d.name)
+      .attr("text-anchor", "start")
+      .attr("dx", "18")
+      .attr("dy", "0.35em")
+      .style("font-size", "9px")
+      .style("font-weight", "500")
+      .style("fill", "#535453");
+
+    // Update positions on ANT simulation tick
+    antSimulation.on("tick", () => {
+      antLink
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
+
+      antNode
+        .attr("transform", d => `translate(${d.x},${d.y})`);
+    });
+
+    // ANT Drag functions
+    function antDragstarted(event, d) {
+      if (!event.active) antSimulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    function antDragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+
+    function antDragended(event, d) {
+      if (!event.active) antSimulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+  </script>
+  <script>
+    // Energy Bill Visualization - Observable Style with Percentage Change
+    const rawData = [
+      {Year: "2016", Residential: 103.06, Small_Comm_Ind: 1400.04, Large_Comm_Ind: 60688.34},
+      {Year: "2017", Residential: 103.12, Small_Comm_Ind: 1444.56, Large_Comm_Ind: 66207.59},
+      {Year: "2018", Residential: 115.45, Small_Comm_Ind: 1601.11, Large_Comm_Ind: 74916.6},
+      {Year: "2019", Residential: 104.05, Small_Comm_Ind: 1515.7, Large_Comm_Ind: 60726.45},
+      {Year: "2020", Residential: 108.62, Small_Comm_Ind: 1520.18, Large_Comm_Ind: 51222.29},
+      {Year: "2021", Residential: 118.08, Small_Comm_Ind: 1694.02, Large_Comm_Ind: 70957.56},
+      {Year: "2022", Residential: 152.02, Small_Comm_Ind: 2355.35, Large_Comm_Ind: 99030.91},
+      {Year: "2023", Residential: 148.03, Small_Comm_Ind: 1832.49, Large_Comm_Ind: 80201.88},
+      {Year: "2024", Residential: 152.88, Small_Comm_Ind: 2184.21, Large_Comm_Ind: 76849.19}
+    ];
+
+    // Calculate percentage change from 2016 baseline
+    const baselineYear = "2016";
+    const baseline = rawData.find(d => d.Year === baselineYear);
+    
+    const energyData = rawData.map(d => ({
+      Year: d.Year,
+      Residential: ((d.Residential - baseline.Residential) / baseline.Residential) * 100,
+      Small_Comm_Ind: ((d.Small_Comm_Ind - baseline.Small_Comm_Ind) / baseline.Small_Comm_Ind) * 100,
+      Large_Comm_Ind: ((d.Large_Comm_Ind - baseline.Large_Comm_Ind) / baseline.Large_Comm_Ind) * 100
+    }));
+
+    // Set up the chart dimensions with more space for legend
+    const margin = {top: 60, right: 250, bottom: 80, left: 100};
+    const width = 960 - margin.left - margin.right;
+    const height = 500 - margin.top - margin.bottom;
+
+    const svg = d3.select("#energy-bill-visualization")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .style("font", "12px sans-serif");
+
+    const chart = svg.append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Define the data structure
+    const subgroups = ["Residential", "Small_Comm_Ind", "Large_Comm_Ind"];
+    const groups = energyData.map(d => d.Year);
+
+    // Create scales for line chart
+    const x0 = d3.scaleBand()
+      .domain(groups)
+      .range([0, width])
+      .padding(0.1);
+
+    const x1 = d3.scaleBand()
+      .domain(subgroups)
+      .range([0, x0.bandwidth()])
+      .padding(0.05);
+
+    const y = d3.scaleLinear()
+      .domain([
+        d3.min(energyData, d => d3.min(subgroups, key => +d[key])),
+        d3.max(energyData, d => d3.max(subgroups, key => +d[key]))
+      ])
+      .nice()
+      .range([height, 0]);
+
+    // Color scale with Observable-style colors
+    const color = d3.scaleOrdinal()
+      .domain(subgroups)
+      .range(["#4e79a7", "#f28e2c", "#e15759"]);
+
+    // Create line generator
+    const line = d3.line()
+      .x(d => x0(d.Year) + x0.bandwidth() / 2)
+      .y(d => y(d.value))
+      .curve(d3.curveMonotoneX);
+
+    // Add the lines with hover effects
+    subgroups.forEach(subgroup => {
+      chart.append("path")
+        .datum(energyData.map(d => ({Year: d.Year, value: +d[subgroup]})))
+        .attr("fill", "none")
+        .attr("stroke", color(subgroup))
+        .attr("stroke-width", 2.5)
+        .style("cursor", "pointer")
+        .on("mouseover", function() {
+          d3.select(this)
+            .attr("stroke-width", 4);
+        })
+        .on("mouseout", function() {
+          d3.select(this)
+            .attr("stroke-width", 2.5);
+        })
+        .attr("d", line);
+
+      // Add data points
+      chart.selectAll(`.${subgroup}-points`)
+        .data(energyData.map(d => ({Year: d.Year, value: +d[subgroup]})))
+        .enter()
+        .append("circle")
+        .attr("class", `${subgroup}-points`)
+        .attr("cx", d => x0(d.Year) + x0.bandwidth() / 2)
+        .attr("cy", d => y(d.value))
+        .attr("r", 4)
+        .attr("fill", color(subgroup))
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 1.5)
+        .style("cursor", "pointer")
+        .on("mouseover", function(event, d) {
+          // Find original value for tooltip
+          const originalValue = rawData.find(raw => raw.Year === d.Year)[subgroup];
+          
+          d3.select(this)
+            .attr("r", 6);
+          
+          // Show tooltip
+          d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("position", "absolute")
+            .style("background", "rgba(0,0,0,0.8)")
+            .style("color", "white")
+            .style("padding", "8px 12px")
+            .style("border-radius", "4px")
+            .style("font-size", "12px")
+            .style("pointer-events", "none")
+            .style("z-index", "1000")
+            .html(`${d.Year}: ${d.value.toFixed(1)}% change ($${originalValue.toLocaleString()})`)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 10) + "px");
+        })
+        .on("mouseout", function() {
+          d3.select(this)
+            .attr("r", 4);
+          d3.selectAll(".tooltip").remove();
+        });
+    });
+
+    // Add X axis
+    chart.append("g")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x0))
+      .call(g => g.select(".domain").remove())
+      .call(g => g.selectAll(".tick line").remove())
+      .call(g => g.selectAll(".tick text")
+        .style("font-size", "11px")
+        .style("fill", "#666"));
+
+    // Add Y axis
+    chart.append("g")
+      .call(d3.axisLeft(y).ticks(5))
+      .call(g => g.select(".domain").remove())
+      .call(g => g.selectAll(".tick line").remove())
+      .call(g => g.selectAll(".tick text")
+        .style("font-size", "11px")
+        .style("fill", "#666"));
+
+    // Add Y axis label
+    chart.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -margin.left + 20)
+      .attr("x", -height / 2)
+      .attr("text-anchor", "middle")
+      .style("font-size", "12px")
+      .style("fill", "#666")
+      .text("Percentage Change from 2016 (%)");
+
+    // Add X axis label
+    chart.append("text")
+      .attr("x", width / 2)
+      .attr("y", height + margin.bottom - 10)
+      .attr("text-anchor", "middle")
+      .style("font-size", "12px")
+      .style("fill", "#666")
+      .text("Year");
+
+    // Add legend with better positioning
+    const legend = svg.append("g")
+      .attr("transform", `translate(${width + margin.left + 30}, ${margin.top})`)
+      .selectAll("g")
+      .data(subgroups)
+      .join("g")
+      .attr("transform", (d, i) => `translate(0,${i * 40})`);
+
+    legend.append("rect")
+      .attr("x", 0)
+      .attr("width", 15)
+      .attr("height", 15)
+      .attr("fill", d => color(d))
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 0.5)
+      .style("opacity", 0.9);
+
+    legend.append("text")
+      .attr("x", 20)
+      .attr("y", 12)
+      .style("font-size", "11px")
+      .style("fill", "#666")
+      .text(d => {
+        switch(d) {
+          case "Residential": return "Residential";
+          case "Small_Comm_Ind": return "Small Commercial/Industrial";
+          case "Large_Comm_Ind": return "Large Commercial/Industrial";
+          default: return d;
+        }
+      });
+
+    // Add subtle grid lines
+    chart.append("g")
+      .attr("class", "grid")
+      .call(d3.axisLeft(y)
+        .tickSize(-width)
+        .tickFormat("")
+        .ticks(5))
+      .call(g => g.select(".domain").remove())
+      .call(g => g.selectAll(".tick line")
+        .style("stroke", "#ddd")
+        .style("stroke-width", 0.5)
+        .style("opacity", 0.5));
+
+    // Add zero reference line
+    chart.append("line")
+      .attr("x1", 0)
+      .attr("x2", width)
+      .attr("y1", y(0))
+      .attr("y2", y(0))
+      .attr("stroke", "#999")
+      .attr("stroke-width", 1)
+      .attr("stroke-dasharray", "3,3")
+      .style("opacity", 0.7);
+  </script>
+  <script>
+    // Background Air Leaking Demo - Enhanced Version
+    let particles = [];
+    let canvas;
+    let mouseAttraction = false;
+    let mousePos = { x: 0, y: 0 };
+
+    function setup() {
+      // Get the header element to determine proper dimensions
+      let headerElement = document.querySelector('header');
+      let headerHeight = headerElement ? headerElement.offsetHeight : 400;
+      
+      // Create canvas with expanded dimensions
+      canvas = createCanvas(windowWidth + 1500, headerHeight + 800);
+      canvas.parent('background-demo');
+      
+      // Set canvas size explicitly
+      canvas.style('width', 'calc(100% + 1500px)');
+      canvas.style('height', (headerHeight + 800) + 'px');
+      
+      console.log('Canvas size:', width, height);
+      console.log('Header height:', headerHeight);
+      
+      // Add mouse event listeners
+      canvas.mouseOver(() => {
+        mouseAttraction = true;
+      });
+      
+      canvas.mouseOut(() => {
+        mouseAttraction = false;
+      });
+    }
+
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+
+    function draw() {
+      // Create completely transparent background
+      clear();
+      
+      // Update mouse position
+      mousePos.x = mouseX;
+      mousePos.y = mouseY;
+      
+      // Emit particles from building edges
+      emitParticles();
+      
+      // Update and display particles
+      updateParticles();
+    }
+
+
+
+    function emitParticles() {
+      // Debug: log canvas dimensions
+      console.log('Emit particles - Canvas size:', width, height);
+      
+      let leakPoints = [];
+      
+      // Create blue particles (cool air) from top areas
+      for (let i = 0; i < 8; i++) {
+        let x, y, type, angle;
+        
+        // Blue particles from top zones
+        let topZone = random(['top-left', 'top-center', 'top-right']);
+        switch(topZone) {
+          case 'top-left':
+            x = random(0, width * 0.3);
+            y = random(0, height * 0.2);
+            break;
+          case 'top-center':
+            x = random(width * 0.3, width * 0.7);
+            y = random(0, height * 0.2);
+            break;
+          case 'top-right':
+            x = random(width * 0.7, width);
+            y = random(0, height * 0.2);
+            break;
+        }
+        type = 'cool';
+        angle = random(PI/6, 5*PI/6); // Downward angles
+        leakPoints.push({ x, y, type, angle });
+      }
+      
+      // Create orange particles (hot air) from bottom areas
+      for (let i = 0; i < 8; i++) {
+        let x, y, type, angle;
+        
+        // Orange particles from bottom zones
+        let bottomZone = random(['bottom-left', 'bottom-center', 'bottom-right']);
+        switch(bottomZone) {
+          case 'bottom-left':
+            x = random(0, width * 0.3);
+            y = random(height * 0.8, height);
+            break;
+          case 'bottom-center':
+            x = random(width * 0.3, width * 0.7);
+            y = random(height * 0.8, height);
+            break;
+          case 'bottom-right':
+            x = random(width * 0.7, width);
+            y = random(height * 0.8, height);
+            break;
+        }
+        type = 'hot';
+        angle = random(-5*PI/6, -PI/6); // Upward angles
+        leakPoints.push({ x, y, type, angle });
+      }
+      
+      // Add some mixed particles in middle zones for interaction
+      for (let i = 0; i < 5; i++) {
+        let x, y, type, angle;
+        
+        // Middle zones for interaction
+        let middleZone = random(['mid-left', 'mid-right', 'center']);
+        switch(middleZone) {
+          case 'mid-left':
+            x = random(width * 0.1, width * 0.3);
+            y = random(height * 0.3, height * 0.7);
+            break;
+          case 'mid-right':
+            x = random(width * 0.7, width * 0.9);
+            y = random(height * 0.3, height * 0.7);
+            break;
+          case 'center':
+            x = random(width * 0.3, width * 0.7);
+            y = random(height * 0.3, height * 0.7);
+            break;
+        }
+        type = random() < 0.5 ? 'hot' : 'cool';
+        angle = random(TWO_PI);
+        leakPoints.push({ x, y, type, angle });
+      }
+      
+      // Create particles at leak points
+      for (let point of leakPoints) {
+        if (random() < 0.5) { // Balanced emission rate
+          particles.push(new Particle(point.x, point.y, point.type, point.angle));
+        }
+      }
+    }
+
+    function updateParticles() {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        let p = particles[i];
+        p.update();
+        p.display();
+        
+        // Remove dead particles
+        if (p.isDead()) {
+          particles.splice(i, 1);
+        }
+      }
+    }
+
+    class Particle {
+      constructor(x, y, type, angle) {
+        this.pos = createVector(x, y);
+        this.vel = p5.Vector.fromAngle(angle);
+        this.vel.mult(random(0.3, 1.2));
+        this.acc = createVector(0, 0);
+        this.lifespan = 255;
+        this.type = type;
+        this.size = random(4, 12); // 4x larger particles
+        
+        // Add some randomness to velocity
+        this.vel.add(createVector(random(-0.3, 0.3), random(-0.3, 0.3)));
+      }
+      
+      applyForce(force) {
+        this.acc.add(force);
+      }
+      
+      update() {
+        // Add mouse attraction when hovering
+        if (mouseAttraction) {
+          let mouseDist = dist(this.pos.x, this.pos.y, mousePos.x, mousePos.y);
+          if (mouseDist < 200) { // Attraction radius
+            let attraction = p5.Vector.sub(createVector(mousePos.x, mousePos.y), this.pos);
+            attraction.normalize();
+            attraction.mult(0.5); // Attraction strength
+            this.applyForce(attraction);
+          }
+        }
+        
+        this.vel.add(this.acc);
+        this.pos.add(this.vel);
+        this.acc.mult(0);
+        this.lifespan -= 1.5;
+        
+        // Add some wind effect (reduced when mouse is attracting)
+        if (!mouseAttraction) {
+          this.applyForce(createVector(random(-0.05, 0.05), random(-0.05, 0.05)));
+        }
+      }
+      
+      display() {
+        push();
+        noStroke();
+        
+        if (this.type === 'hot') {
+          // Hot air particles - muted orange/red tones
+          let r = random(244, 255); // #F4A582 range
+          let g = random(165, 200); // #F4A582 range
+          let b = random(130, 150); // #F4A582 range
+          fill(r, g, b, this.lifespan * 0.6); // More transparent
+        } else {
+          // Cool air particles - muted blue tones
+          let r = random(139, 180); // #8BB3E8 range
+          let g = random(179, 220); // #8BB3E8 range
+          let b = random(232, 255); // #8BB3E8 range
+          fill(r, g, b, this.lifespan * 0.5); // More transparent
+        }
+        
+        ellipse(this.pos.x, this.pos.y, this.size);
+        pop();
+      }
+      
+      isDead() {
+        return this.lifespan < 0;
+      }
+    }
+
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+  </script>
 </body>
 </html>

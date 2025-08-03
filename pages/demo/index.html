@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Demo - AI Home Science Platform</title>
+  <link rel="stylesheet" href="../../assets/css/shared.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="../../index.html">Home</a></li>
+      <li><a href="../proposal/index.html">Proposal</a></li>
+      <li><a href="../methodology/index.html">Methodology</a></li>
+      <li><a href="../experiments/index.html">Design Experiments</a></li>
+      <li><a href="index.html" class="active">AI Demo</a></li>
+      
+    </ul>
+  </nav>
+
+  <main>
+    <div class="page-content">
+      <section class="section hero-demo">
+        <div class="demo-hero-content">
+          <h3>BUILDING ENERGY ANALYSIS DEMO</h3>
+          <p>Experience how the AI-powered building energy analysis tool works. Fill out the form below to receive personalized insights about your building's energy consumption patterns and thermal comfort conditions.</p>
+          <div class="demo-cta">
+            <span class="pulse-dot"></span>
+            <span>Start Your Analysis</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="floating-form-container">
+          <div class="form-header">
+            <div class="form-icon">🏗️</div>
+            <h3>TELL US ABOUT YOUR BUILDING</h3>
+            <div class="form-progress">
+              <div class="progress-bar">
+                <div class="progress-fill"></div>
+              </div>
+              <span class="progress-text">Step 1 of 2</span>
+            </div>
+          </div>
+          <form id="comfortForm" class="dynamic-form">
+            <div class="form-group">
+              <label for="buildingType">Building Type:</label>
+              <select id="buildingType" required>
+                <option value="">Select building type</option>
+                <option value="office">Office Building</option>
+                <option value="residential">Residential Building</option>
+                <option value="commercial">Commercial Building</option>
+                <option value="educational">Educational Facility</option>
+                <option value="healthcare">Healthcare Facility</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="zone">Climate Zone:</label>
+              <select id="zone" required>
+                <option value="">Select climate zone</option>
+                <option value="hot">Hot (Southern US)</option>
+                <option value="mixed">Mixed (Central US)</option>
+                <option value="cold">Cold (Northern US)</option>
+                <option value="marine">Marine (Coastal)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="orientation">Building Orientation:</label>
+              <select id="orientation" required>
+                <option value="">Select orientation</option>
+                <option value="north">North-facing</option>
+                <option value="south">South-facing</option>
+                <option value="east">East-facing</option>
+                <option value="west">West-facing</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="insulation">Building Envelope Quality:</label>
+              <select id="insulation" required>
+                <option value="">Select envelope quality</option>
+                <option value="poor">Poor (Old building, drafty)</option>
+                <option value="fair">Fair (Some insulation, minor drafts)</option>
+                <option value="good">Good (Well-insulated, energy-efficient)</option>
+                <option value="excellent">Excellent (New construction, high efficiency)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="ac">HVAC System Type:</label>
+              <select id="ac" required>
+                <option value="">Select HVAC system</option>
+                <option value="central">Central HVAC system</option>
+                <option value="split">Split system units</option>
+                <option value="vrf">Variable Refrigerant Flow (VRF)</option>
+                <option value="chilled_water">Chilled water system</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="heating">Heating System:</label>
+              <select id="heating" required>
+                <option value="">Select heating type</option>
+                <option value="central">Central heating system</option>
+                <option value="boiler">Boiler system</option>
+                <option value="heat_pump">Heat pump</option>
+                <option value="electric">Electric resistance</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="occupancy">Occupancy Pattern:</label>
+              <select id="occupancy" required>
+                <option value="">Select occupancy pattern</option>
+                <option value="constant">Constant (24/7 operation)</option>
+                <option value="daytime">Daytime only (8 AM - 6 PM)</option>
+                <option value="variable">Variable occupancy</option>
+                <option value="seasonal">Seasonal variations</option>
+              </select>
+            </div>
+
+            <button type="submit" class="form-submit">
+              <span class="btn-text">Analyze Building Energy</span>
+              <span class="btn-icon">→</span>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="floating-form-container room-drawing-section">
+          <div class="form-header">
+            <div class="form-icon">🎨</div>
+            <h3>DRAW YOUR ROOM LAYOUT</h3>
+            <div class="form-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 50%"></div>
+              </div>
+              <span class="progress-text">Step 2 of 2</span>
+            </div>
+          </div>
+          <p class="section-description">Draw your room shape and add openings to get more personalized energy advice based on your specific space configuration.</p>
+          
+          <div class="room-drawing-container">
+            <div class="drawing-tools">
+              <button class="tool-btn active" data-tool="room">Draw Room</button>
+              <button class="tool-btn" data-tool="door">Add Door</button>
+              <button class="tool-btn" data-tool="window">Add Window</button>
+              <button class="tool-btn" data-tool="opening">Add Opening</button>
+              <button class="tool-btn" data-tool="clear">Clear All</button>
+            </div>
+            
+            <div class="canvas-container">
+              <canvas id="roomCanvas" width="600" height="400"></canvas>
+              <div class="canvas-instructions">
+                <p>Click and drag to draw your room shape. Use the tools above to add doors, windows, and openings.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="room-details-form">
+            <h4>ROOM DETAILS & LIVING HABITS</h4>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="roomType">Room Type:</label>
+                <select id="roomType" required>
+                  <option value="">Select room type</option>
+                  <option value="living">Living Room</option>
+                  <option value="bedroom">Bedroom</option>
+                  <option value="kitchen">Kitchen</option>
+                  <option value="bathroom">Bathroom</option>
+                  <option value="office">Home Office</option>
+                  <option value="dining">Dining Room</option>
+                  <option value="basement">Basement</option>
+                  <option value="attic">Attic</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="occupancyHours">Daily Occupancy Hours:</label>
+                <select id="occupancyHours" required>
+                  <option value="">Select hours</option>
+                  <option value="2-4">2-4 hours</option>
+                  <option value="4-8">4-8 hours</option>
+                  <option value="8-12">8-12 hours</option>
+                  <option value="12-16">12-16 hours</option>
+                  <option value="16-24">16-24 hours</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="activityLevel">Activity Level:</label>
+                <select id="activityLevel" required>
+                  <option value="">Select activity level</option>
+                  <option value="low">Low (Sleeping, Relaxing)</option>
+                  <option value="medium">Medium (Working, Cooking)</option>
+                  <option value="high">High (Exercise, Entertainment)</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="equipmentUsage">Equipment Usage:</label>
+                <select id="equipmentUsage" required>
+                  <option value="">Select equipment usage</option>
+                  <option value="minimal">Minimal (Basic lighting)</option>
+                  <option value="moderate">Moderate (TV, Computer)</option>
+                  <option value="high">High (Appliances, Electronics)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="thermalPreference">Thermal Comfort Preference:</label>
+              <select id="thermalPreference" required>
+                <option value="">Select preference</option>
+                <option value="cool">Cool (18-22°C / 64-72°F)</option>
+                <option value="neutral">Neutral (20-24°C / 68-76°F)</option>
+                <option value="warm">Warm (22-26°C / 72-79°F)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="ventilationHabits">Ventilation Habits:</label>
+              <select id="ventilationHabits" required>
+                <option value="">Select ventilation habits</option>
+                <option value="minimal">Minimal (Rarely open windows)</option>
+                <option value="occasional">Occasional (Open windows sometimes)</option>
+                <option value="frequent">Frequent (Regular air circulation)</option>
+                <option value="constant">Constant (Always ventilating)</option>
+              </select>
+            </div>
+
+            <button type="button" class="form-submit" id="analyzeRoomBtn">
+              <span class="btn-text">Analyze Room Layout & Habits</span>
+              <span class="btn-icon">→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div id="results" class="result-display" style="display: none;">
+          <h3>YOUR PERSONALIZED ENERGY RECOMMENDATIONS</h3>
+          <div id="mainRecommendation"></div>
+          
+          <h4>QUICK TIPS</h4>
+          <div id="tipsRecommendation"></div>
+          
+          <h4>COMFORT ANALYSIS</h4>
+          <div id="comfortRecommendation"></div>
+          
+          <h4>POTENTIAL SAVINGS</h4>
+          <div id="savingsRecommendation"></div>
+        </div>
+      </section>
+
+
+
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p>© 2025 Sara Lin | 2025 MSCDP | Summer Capstone Project</p>
+      <p>"Understanding building energy behavior is the first step toward optimization."</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/shared.js"></script>
+  <script>
+    // Room Drawing Canvas Functionality
+    class RoomDrawingCanvas {
+      constructor() {
+        this.canvas = document.getElementById('roomCanvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.currentTool = 'room';
+        this.isDrawing = false;
+        this.roomShape = [];
+        this.elements = [];
+        this.init();
+      }
+
+      init() {
+        this.setupCanvas();
+        this.setupEventListeners();
+        this.setupToolButtons();
+      }
+
+      setupCanvas() {
+        this.ctx.strokeStyle = '#2A3A20';
+        this.ctx.lineWidth = 2;
+        this.ctx.fillStyle = 'rgba(42, 58, 32, 0.1)';
+      }
+
+      setupEventListeners() {
+        this.canvas.addEventListener('mousedown', (e) => this.startDrawing(e));
+        this.canvas.addEventListener('mousemove', (e) => this.draw(e));
+        this.canvas.addEventListener('mouseup', () => this.stopDrawing());
+        this.canvas.addEventListener('click', (e) => this.handleClick(e));
+      }
+
+      setupToolButtons() {
+        const toolButtons = document.querySelectorAll('.tool-btn');
+        toolButtons.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            toolButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            this.currentTool = btn.dataset.tool;
+            
+            if (this.currentTool === 'clear') {
+              this.clearCanvas();
+            }
+          });
+        });
+      }
+
+      startDrawing(e) {
+        if (this.currentTool === 'room') {
+          this.isDrawing = true;
+          const rect = this.canvas.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          this.roomShape = [{x, y}];
+          this.ctx.beginPath();
+          this.ctx.moveTo(x, y);
+        }
+      }
+
+      draw(e) {
+        if (this.isDrawing && this.currentTool === 'room') {
+          const rect = this.canvas.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          this.roomShape.push({x, y});
+          this.ctx.lineTo(x, y);
+          this.ctx.stroke();
+        }
+      }
+
+      stopDrawing() {
+        if (this.isDrawing && this.currentTool === 'room') {
+          this.isDrawing = false;
+          this.ctx.closePath();
+          this.ctx.fill();
+        }
+      }
+
+      handleClick(e) {
+        if (this.currentTool !== 'room' && this.currentTool !== 'clear') {
+          const rect = this.canvas.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          this.addElement(x, y);
+        }
+      }
+
+      addElement(x, y) {
+        const element = {
+          type: this.currentTool,
+          x: x,
+          y: y,
+          size: 20
+        };
+        this.elements.push(element);
+        this.drawElement(element);
+      }
+
+      drawElement(element) {
+        this.ctx.save();
+        
+        switch(element.type) {
+          case 'door':
+            this.ctx.fillStyle = '#8B4513';
+            this.ctx.fillRect(element.x - 10, element.y - 15, 20, 30);
+            this.ctx.strokeStyle = '#654321';
+            this.ctx.strokeRect(element.x - 10, element.y - 15, 20, 30);
+            break;
+          case 'window':
+            this.ctx.fillStyle = '#87CEEB';
+            this.ctx.fillRect(element.x - 12, element.y - 12, 24, 24);
+            this.ctx.strokeStyle = '#4682B4';
+            this.ctx.strokeRect(element.x - 12, element.y - 12, 24, 24);
+            break;
+          case 'opening':
+            this.ctx.fillStyle = '#F0E68C';
+            this.ctx.beginPath();
+            this.ctx.arc(element.x, element.y, 12, 0, 2 * Math.PI);
+            this.ctx.fill();
+            this.ctx.strokeStyle = '#DAA520';
+            this.ctx.stroke();
+            break;
+        }
+        
+        this.ctx.restore();
+      }
+
+      clearCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.roomShape = [];
+        this.elements = [];
+        this.setupCanvas();
+      }
+
+      getRoomData() {
+        return {
+          roomShape: this.roomShape,
+          elements: this.elements,
+          roomType: document.getElementById('roomType').value,
+          occupancyHours: document.getElementById('occupancyHours').value,
+          activityLevel: document.getElementById('activityLevel').value,
+          equipmentUsage: document.getElementById('equipmentUsage').value,
+          thermalPreference: document.getElementById('thermalPreference').value,
+          ventilationHabits: document.getElementById('ventilationHabits').value
+        };
+      }
+    }
+
+    // Initialize room drawing
+    const roomCanvas = new RoomDrawingCanvas();
+
+    // Original form submission
+    document.getElementById('comfortForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      if (!validateForm(this)) {
+        return;
+      }
+      
+      const buildingType = document.getElementById('buildingType').value;
+      const zone = document.getElementById('zone').value;
+      const orientation = document.getElementById('orientation').value;
+      const insulation = document.getElementById('insulation').value;
+      const ac = document.getElementById('ac').value;
+      const heating = document.getElementById('heating').value;
+      const occupancy = document.getElementById('occupancy').value;
+      
+      const recommendations = generateRecommendations(buildingType, zone, orientation, insulation, ac, heating, occupancy);
+      
+      document.getElementById('mainRecommendation').innerHTML = recommendations.main;
+      document.getElementById('tipsRecommendation').innerHTML = recommendations.tips;
+      document.getElementById('comfortRecommendation').innerHTML = recommendations.comfort;
+      document.getElementById('savingsRecommendation').innerHTML = recommendations.savings;
+      
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Room layout analysis
+    document.getElementById('analyzeRoomBtn').addEventListener('click', function() {
+      const roomData = roomCanvas.getRoomData();
+      
+      // Validate room data
+      if (!roomData.roomType || !roomData.occupancyHours || !roomData.activityLevel || 
+          !roomData.equipmentUsage || !roomData.thermalPreference || !roomData.ventilationHabits) {
+        alert('Please fill in all room details and living habits.');
+        return;
+      }
+      
+      if (roomData.roomShape.length < 3) {
+        alert('Please draw your room shape first.');
+        return;
+      }
+      
+      // Generate room-specific recommendations
+      const roomRecommendations = generateRoomRecommendations(roomData);
+      
+      // Display results
+      document.getElementById('mainRecommendation').innerHTML = roomRecommendations.main;
+      document.getElementById('tipsRecommendation').innerHTML = roomRecommendations.tips;
+      document.getElementById('comfortRecommendation').innerHTML = roomRecommendations.comfort;
+      document.getElementById('savingsRecommendation').innerHTML = roomRecommendations.savings;
+      
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Room-specific recommendation generator
+    function generateRoomRecommendations(roomData) {
+      const { roomType, occupancyHours, activityLevel, equipmentUsage, thermalPreference, ventilationHabits, elements } = roomData;
+      
+      let mainRecommendation = '';
+      let tipsRecommendation = '';
+      let comfortRecommendation = '';
+      let savingsRecommendation = '';
+
+      // Analyze room type and usage patterns
+      if (roomType === 'bedroom' && occupancyHours === '16-24') {
+        mainRecommendation = '<p><strong>Sleep Quality Optimization:</strong> Your bedroom is occupied for extended periods, making thermal comfort crucial for sleep quality. Consider blackout curtains and temperature control strategies.</p>';
+      } else if (roomType === 'kitchen' && activityLevel === 'high') {
+        mainRecommendation = '<p><strong>Kitchen Heat Management:</strong> High activity in the kitchen generates significant heat. Focus on ventilation and localized cooling strategies.</p>';
+      } else if (roomType === 'office' && equipmentUsage === 'high') {
+        mainRecommendation = '<p><strong>Electronics Heat Management:</strong> High equipment usage creates heat loads. Consider dedicated cooling zones and equipment placement optimization.</p>';
+      }
+
+      // Analyze openings and ventilation
+      const windows = elements.filter(el => el.type === 'window').length;
+      const doors = elements.filter(el => el.type === 'door').length;
+      const openings = elements.filter(el => el.type === 'opening').length;
+
+      if (windows > 0 && ventilationHabits === 'frequent') {
+        tipsRecommendation = '<p><strong>Natural Ventilation Strategy:</strong> Your room has good window coverage. Use cross-ventilation techniques and consider window treatments for solar control.</p>';
+      } else if (windows === 0 && ventilationHabits === 'frequent') {
+        tipsRecommendation = '<p><strong>Mechanical Ventilation Needed:</strong> Consider adding mechanical ventilation or air purifiers since natural ventilation is limited.</p>';
+      }
+
+      // Thermal comfort analysis
+      if (thermalPreference === 'cool' && roomType === 'bedroom') {
+        comfortRecommendation = '<p><strong>Cool Sleep Environment:</strong> Maintain 18-22°C for optimal sleep. Consider ceiling fans or localized cooling units.</p>';
+      } else if (thermalPreference === 'warm' && activityLevel === 'low') {
+        comfortRecommendation = '<p><strong>Warm Comfort Zone:</strong> Use radiant heating or heated seating areas for localized warmth without overheating the entire room.</p>';
+      }
+
+      // Energy savings based on usage patterns
+      if (occupancyHours === '16-24' && equipmentUsage === 'high') {
+        savingsRecommendation = '<p><strong>High Usage Optimization:</strong> Consider smart thermostats and occupancy sensors to reduce energy waste during unoccupied periods.</p>';
+      } else if (occupancyHours === '2-4' && activityLevel === 'low') {
+        savingsRecommendation = '<p><strong>Low Usage Strategy:</strong> Implement zone-based heating/cooling to focus energy use only when needed.</p>';
+      }
+
+      return {
+        main: mainRecommendation || '<p><strong>Room Analysis Complete:</strong> Your room layout and usage patterns have been analyzed for personalized energy recommendations.</p>',
+        tips: tipsRecommendation || '<p><strong>General Tips:</strong> Consider the placement of furniture and equipment to optimize air flow and thermal comfort.</p>',
+        comfort: comfortRecommendation || '<p><strong>Comfort Strategy:</strong> Focus on creating micro-climates within your room for optimal thermal comfort.</p>',
+        savings: savingsRecommendation || '<p><strong>Energy Strategy:</strong> Implement smart controls and zone-based systems to optimize energy usage.</p>'
+      };
+    }
+  </script>
+</body>
+</html> 

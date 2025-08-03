@@ -43,15 +43,35 @@ Despite growing awareness of climate change and energy efficiency, many urban re
 ### Installation
 1. Clone or download this repository
 2. Open `index.html` in your web browser
-3. Start using the AI Home Energy Coach!
+3. Start using the AI Home Science Platform!
+
+### Project Structure
+```
+Sara-Lin_Capstone-Project/
+├── index.html                 # Main homepage
+├── pages/                     # Individual page sections
+│   ├── proposal/             # Project proposal
+│   ├── methodology/          # Research methodology
+│   ├── experiments/          # Design experiments
+│   ├── demo/                # AI demo interface
+│   ├── ant-diagram/         # ANT diagram visualization
+│   └── climate-data/        # Climate data analysis
+├── demos/                    # Interactive demos
+│   ├── air-leaking-demo/    # Air leakage simulation
+│   ├── energy-bill-demo/    # Energy bill visualization
+│   ├── climate-change-demo/ # Climate change data
+│   └── ant-diagram-demo/    # ANT diagram demo
+├── assets/                   # Shared resources
+│   ├── css/                 # Stylesheets
+│   └── js/                  # JavaScript files
+└── README.md                # Project documentation
+```
 
 ### Usage Instructions
-1. **Enter your location**: Provide your zip code for climate-specific recommendations
-2. **Select building type**: Choose from apartment, house, studio, or loft
-3. **Draw your floor plan**: Use the interactive canvas to create your home layout
-4. **Add windows and doors**: Place them on your floor plan for accurate analysis
-5. **Describe your habits**: Check boxes for your typical energy usage patterns
-6. **Get AI recommendations**: Click "Analyze My Home" for personalized advice
+1. **Navigate the platform**: Use the navigation menu to explore different sections
+2. **View interactive demos**: Check out the demos in the `/demos/` directory
+3. **Explore research**: Read through the proposal and methodology sections
+4. **Try the AI demo**: Experience the interactive AI interface
 
 ## 🛠️ Technology Stack
 

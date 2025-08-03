@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project Proposal - AI Home Science Platform</title>
+  <link rel="stylesheet" href="../../assets/css/shared.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="../../index.html">Home</a></li>
+      <li><a href="index.html" class="active">Proposal</a></li>
+      <li><a href="../methodology/index.html">Methodology</a></li>
+      <li><a href="../experiments/index.html">Design Experiments</a></li>
+      <li><a href="../demo/index.html">AI Demo</a></li>
+      
+    </ul>
+  </nav>
+
+  <main>
+    <div class="page-content">
+      <section class="section">
+        <h3>PRECEDENT STUDY : SMART CITIZEN PLATFORM</h3>
+        <div class="diagram-container">
+          <img src="../../Capstone Project.svg" alt="Smart Citizen Platform Diagram" style="width: 100%; max-width: 960px; height: auto;">
+        </div>
+      </section>
+      
+      <section class="section">
+        <h3>MY PROPOSED FRAMEWORK</h3>
+        <div class="diagram-container">
+          <img src="../../Capstone Project-2.svg" alt="My Proposed Framework Diagram" style="width: 100%; max-width: 960px; height: auto;">
+        </div>
+      </section>
+      
+      <section class="section">
+        <h3>RESEARCH QUESTION</h3>
+        <p>What practical strategies can homeowners, tenants, architects, and interior designers use to reduce energy use and improve indoor comfort without relying on full-scale building renovations?</p>
+      </section>
+      
+      <section class="section">
+        <h3>MY HYPOTHESIS</h3>
+        <p>Energy waste and discomfort often result from poor insulation, air leaks, and inefficient systems. Targeted improvements such as sealing gaps, optimizing natural ventilation, and upgrading outdated appliances can help reduce energy use and improve comfort in both new and existing residential spaces.</p>
+      </section>
+      
+      <section class="section">
+        <h3>TARGET USERS</h3>
+        <p>Home owner<br>
+        Tenant<br>
+        Architect<br>
+        Interior Designer</p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p>© 2025 Sara Lin | 2025 MSCDP | Summer Capstone Project</p>
+      <p>"Understanding building energy behavior is the first step toward optimization."</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/js/shared.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+
+
+    // Energy Bill Visualization - Observable Style with Percentage Change
+    const rawData = [
+      {Year: "2016", Residential: 103.06, Small_Comm_Ind: 1400.04, Large_Comm_Ind: 60688.34},
+      {Year: "2017", Residential: 103.12, Small_Comm_Ind: 1444.56, Large_Comm_Ind: 66207.59},
+      {Year: "2018", Residential: 115.45, Small_Comm_Ind: 1601.11, Large_Comm_Ind: 74916.6},
+      {Year: "2019", Residential: 104.05, Small_Comm_Ind: 1515.7, Large_Comm_Ind: 60726.45},
+      {Year: "2020", Residential: 108.62, Small_Comm_Ind: 1520.18, Large_Comm_Ind: 51222.29},
+      {Year: "2021", Residential: 118.08, Small_Comm_Ind: 1694.02, Large_Comm_Ind: 70957.56},
+      {Year: "2022", Residential: 152.02, Small_Comm_Ind: 2355.35, Large_Comm_Ind: 99030.91},
+      {Year: "2023", Residential: 148.03, Small_Comm_Ind: 1832.49, Large_Comm_Ind: 80201.88},
+      {Year: "2024", Residential: 152.88, Small_Comm_Ind: 2184.21, Large_Comm_Ind: 76849.19}
+    ];
+
+    // Calculate percentage change from 2016 baseline
+    const baselineYear = "2016";
+    const baseline = rawData.find(d => d.Year === baselineYear);
+    
+    const energyData = rawData.map(d => ({
+      Year: d.Year,
+      Residential: ((d.Residential - baseline.Residential) / baseline.Residential) * 100,
+      Small_Comm_Ind: ((d.Small_Comm_Ind - baseline.Small_Comm_Ind) / baseline.Small_Comm_Ind) * 100,
+      Large_Comm_Ind: ((d.Large_Comm_Ind - baseline.Large_Comm_Ind) / baseline.Large_Comm_Ind) * 100
+    }));
+
+    // Set up the chart dimensions with more space for legend
+    const margin = {top: 60, right: 250, bottom: 80, left: 100};
+    const width = 960 - margin.left - margin.right;
+    const height = 500 - margin.top - margin.bottom;
+
+    const svg = d3.select("#energy-bill-visualization")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .style("font", "12px sans-serif");
+
+    const chart = svg.append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Define the data structure
+    const subgroups = ["Residential", "Small_Comm_Ind", "Large_Comm_Ind"];
+    const groups = energyData.map(d => d.Year);
+
+    // Create scales for line chart
+    const x0 = d3.scaleBand()
+      .domain(groups)
+      .range([0, width])
+      .padding(0.1);
+
+    const x1 = d3.scaleBand()
+      .domain(subgroups)
+      .range([0, x0.bandwidth()])
+      .padding(0.05);
+
+    const y = d3.scaleLinear()
+      .domain([
+        d3.min(energyData, d => d3.min(subgroups, key => +d[key])),
+        d3.max(energyData, d => d3.max(subgroups, key => +d[key]))
+      ])
+      .nice()
+      .range([height, 0]);
+
+    // Color scale with Observable-style colors
+    const color = d3.scaleOrdinal()
+      .domain(subgroups)
+      .range(["#4e79a7", "#f28e2c", "#e15759"]);
+
+    // Create line generator
+    const line = d3.line()
+      .x(d => x0(d.Year) + x0.bandwidth() / 2)
+      .y(d => y(d.value))
+      .curve(d3.curveMonotoneX);
+
+    // Add the lines with hover effects
+    subgroups.forEach(subgroup => {
+      chart.append("path")
+        .datum(energyData.map(d => ({Year: d.Year, value: +d[subgroup]})))
+        .attr("fill", "none")
+        .attr("stroke", color(subgroup))
+        .attr("stroke-width", 2.5)
+        .style("cursor", "pointer")
+        .on("mouseover", function() {
+          d3.select(this)
+            .attr("stroke-width", 4);
+        })
+        .on("mouseout", function() {
+          d3.select(this)
+            .attr("stroke-width", 2.5);
+        })
+        .attr("d", line);
+    });
+
+    // Add the data points with tooltips
+    chart.append("g")
+      .selectAll("g")
+      .data(energyData)
+      .join("g")
+      .attr("transform", d => `translate(${x0(d.Year) + x0.bandwidth() / 2},0)`)
+      .selectAll("circle")
+      .data(d => subgroups.map(key => ({key, value: +d[key], year: d.Year})))
+      .join("circle")
+      .attr("cy", d => y(d.value))
+      .attr("r", 4)
+      .attr("fill", d => color(d.key))
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 1.5)
+      .style("cursor", "pointer")
+      .on("mouseover", function(event, d) {
+        d3.select(this)
+          .attr("r", 6)
+          .attr("stroke-width", 2);
+      })
+      .on("mouseout", function(event, d) {
+        d3.select(this)
+          .attr("r", 4)
+          .attr("stroke-width", 1.5);
+      })
+      .append("title")
+      .text(d => {
+        const originalValue = rawData.find(item => item.Year === d.year)[d.key];
+        return `${d.key}: ${d.value.toFixed(1)}% change ($${originalValue.toLocaleString()})`;
+      });
+
+    // Add X axis
+    chart.append("g")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x0))
+      .call(g => g.select(".domain").remove())
+      .call(g => g.selectAll(".tick line").remove())
+      .call(g => g.selectAll(".tick text")
+        .style("font-size", "11px")
+        .style("fill", "#666"));
+
+    // Add Y axis
+    chart.append("g")
+      .call(d3.axisLeft(y).ticks(5))
+      .call(g => g.select(".domain").remove())
+      .call(g => g.selectAll(".tick line").remove())
+      .call(g => g.selectAll(".tick text")
+        .style("font-size", "11px")
+        .style("fill", "#666"));
+
+    // Add Y axis label
+    chart.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -margin.left + 20)
+      .attr("x", -height / 2)
+      .attr("text-anchor", "middle")
+      .style("font-size", "12px")
+      .style("fill", "#666")
+      .text("Percentage Change from 2016 (%)");
+
+    // Add X axis label
+    chart.append("text")
+      .attr("x", width / 2)
+      .attr("y", height + margin.bottom - 10)
+      .attr("text-anchor", "middle")
+      .style("font-size", "12px")
+      .style("fill", "#666")
+      .text("Year");
+
+    // Add legend with better positioning
+    const legend = svg.append("g")
+      .attr("transform", `translate(${width + margin.left + 30}, ${margin.top})`)
+      .selectAll("g")
+      .data(subgroups)
+      .join("g")
+      .attr("transform", (d, i) => `translate(0,${i * 40})`);
+
+    legend.append("rect")
+      .attr("x", 0)
+      .attr("width", 15)
+      .attr("height", 15)
+      .attr("fill", d => color(d))
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 0.5)
+      .style("opacity", 0.9);
+
+    legend.append("text")
+      .attr("x", 20)
+      .attr("y", 12)
+      .style("font-size", "11px")
+      .style("fill", "#666")
+      .text(d => {
+        switch(d) {
+          case "Residential": return "Residential";
+          case "Small_Comm_Ind": return "Small Commercial/Industrial";
+          case "Large_Comm_Ind": return "Large Commercial/Industrial";
+          default: return d;
+        }
+      });
+
+
+
+    // Add subtle grid lines
+    chart.append("g")
+      .attr("class", "grid")
+      .call(d3.axisLeft(y)
+        .tickSize(-width)
+        .tickFormat("")
+        .ticks(5))
+      .call(g => g.select(".domain").remove())
+      .call(g => g.selectAll(".tick line")
+        .style("stroke", "#ddd")
+        .style("stroke-width", 0.5)
+        .style("opacity", 0.5));
+
+    // Add zero reference line
+    chart.append("line")
+      .attr("x1", 0)
+      .attr("x2", width)
+      .attr("y1", y(0))
+      .attr("y2", y(0))
+      .attr("stroke", "#999")
+      .attr("stroke-width", 1)
+      .attr("stroke-dasharray", "3,3")
+      .style("opacity", 0.7);
+  </script>
+</body>
+</html> 
