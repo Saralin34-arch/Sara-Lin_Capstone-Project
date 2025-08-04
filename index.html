@@ -31,7 +31,7 @@
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="pages/proposal/index.html">Proposal</a></li>
       <li><a href="pages/methodology/index.html">Methodology</a></li>
-      <li><a href="pages/experiments/index.html">Design Experiments</a></li>
+      <li><a href="pages/experiments/index.html">Workflow</a></li>
       <li><a href="pages/demo/index.html">AI Demo</a></li>
       
     </ul>
@@ -61,11 +61,73 @@
             <svg id="ant-graph" width="600" height="450"></svg>
           </div>
         </div>
+        
+        <div class="discomfort-factors">
+          <div class="factor-group">
+            <h4>Temperature & Humidity:</h4>
+            <ul>
+              <li>Room feels too hot or too cold throughout the day</li>
+              <li>Drafts from windows, doors, or vents</li>
+              <li>Humidity feels too high (sticky, musty)</li>
+              <li>Air feels too dry (dry skin, dry throat, static)</li>
+            </ul>
+          </div>
+          
+          <div class="factor-group">
+            <h4>Air Quality</h4>
+            <ul>
+              <li>Air feels stale or stuffy</li>
+              <li>Frequent dust buildup or visible mold</li>
+              <li>Unpleasant odors from cooking, smoke, or chemicals</li>
+              <li>Allergies or respiratory symptoms indoors</li>
+              <li>No access to fresh outdoor air or filtered ventilation</li>
+            </ul>
+          </div>
+          
+          <div class="factor-group">
+            <h4>Noise</h4>
+            <ul>
+              <li>Loud or constant noise from outside (traffic, neighbors, sirens)</li>
+              <li>Mechanical noise from HVAC, plumbing, or appliances</li>
+              <li>Noise disrupts sleep, work, or relaxation</li>
+            </ul>
+          </div>
+          
+          <div class="factor-group">
+            <h4>Lighting</h4>
+            <ul>
+              <li>Not enough natural daylight</li>
+              <li>Artificial lighting is too harsh or too dim</li>
+              <li>Glare on screens or reflective surfaces</li>
+              <li>No task lighting in key areas (kitchen, desk, reading)</li>
+            </ul>
+          </div>
+          
+          <div class="factor-group">
+            <h4>Layout & Spatial Issues</h4>
+            <ul>
+              <li>Space feels cramped or cluttered</li>
+              <li>Limited storage or furniture placement causes frustration</li>
+              <li>Room use does not match lifestyle needs (e.g. no work zone)</li>
+              <li>Poor access or circulation within rooms</li>
+            </ul>
+          </div>
+          
+          <div class="factor-group">
+            <h4>Psychological & Control Factors</h4>
+            <ul>
+              <li>Cannot adjust temperature, airflow, or lighting easily</li>
+              <li>Feelings of lack of privacy or control over the environment</li>
+              <li>Building systems feel confusing, unresponsive, or inaccessible</li>
+              <li>Space feels unsafe or disconnected from personal needs</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       <section class="section section-moved-up">
-        <h3>WHY IS INDOOR THERMAL CONDITIONS IMPORTANT? WHY SHOULD WE BE AWARE OF?</h3>
-        <p>Indoor thermal conditions have a prominent influence on occupant health, performance, and satisfaction [1], [2], [3], and buildings consume substantial amounts of energy to maintain comfortable thermal conditions that support occupants and their activity.</p>
+        <h3>WHY IS INDOOR COMFORTNESS IMPORTANT? WHY SHOULD WE BE AWARE OF?</h3>
+        <p>According to the research: <a href="https://healthybuildings.hsph.harvard.edu/new-thoughts-on-characterizing-indoor-thermal-conditions-for-human-health-outcomes/" target="_blank">New thoughts on characterizing indoor thermal conditions for human health outcomes</a>, indoor thermal conditions have a prominent influence on occupant health, performance, and satisfaction. However, to maintain comfortable thermal conditions that support occupants and their activity, buildings require substantial amounts of energy.</p>
       </section>
 
       <section class="section section-moved-up">
@@ -118,36 +180,41 @@
     // ANT Diagram for Discomfort Factors
     const antData = {
       nodes: [
-        { id: "residents", name: "Residents", group: "human", x: 200, y: 300 },
-        { id: "building_managers", name: "Building Managers", group: "human", x: 400, y: 200 },
-        { id: "energy_advisors", name: "Energy Advisors", group: "human", x: 600, y: 300 },
-        { id: "policymakers", name: "Policymakers", group: "human", x: 400, y: 400 },
-        { id: "temperature_humidity", name: "Temperature & Humidity Issues", group: "environment", x: 300, y: 150 },
-        { id: "air_quality", name: "Poor Air Quality", group: "environment", x: 500, y: 150 },
-        { id: "noise_levels", name: "Excessive Noise", group: "environment", x: 100, y: 200 },
-        { id: "lighting_problems", name: "Inadequate Lighting", group: "environment", x: 700, y: 200 },
-        { id: "building_codes", name: "Building Codes", group: "policy", x: 600, y: 400 },
-        { id: "ai_tool", name: "AI Energy Advisor", group: "technology", x: 400, y: 300 }
+        { id: "temperature", name: "Temperature", group: "environment", x: 200, y: 300 },
+        { id: "relative_humidity", name: "Relative Humidity", group: "environment", x: 400, y: 200 },
+        { id: "air_quality", name: "Air Quality", group: "environment", x: 600, y: 300 },
+        { id: "noise", name: "Noise", group: "environment", x: 400, y: 400 },
+        { id: "lighting", name: "Lighting", group: "environment", x: 300, y: 150 },
+        { id: "room_layout", name: "Room Layout (Spatial Design)", group: "environment", x: 500, y: 150 },
+        { id: "psychological_factors", name: "Psychological & Control Factors", group: "human", x: 100, y: 200 },
+        { id: "users", name: "Users", group: "human", x: 800, y: 300 },
+        { id: "ai_tool", name: "AI Energy Advisor", group: "technology", x: 700, y: 200 }
       ],
       links: [
-        { source: "residents", target: "temperature_humidity", strength: 0.8 },
-        { source: "residents", target: "noise_levels", strength: 0.6 },
-        { source: "residents", target: "air_quality", strength: 0.7 },
-        { source: "building_managers", target: "temperature_humidity", strength: 0.9 },
-        { source: "building_managers", target: "air_quality", strength: 0.8 },
-        { source: "energy_advisors", target: "residents", strength: 0.6 },
-        { source: "energy_advisors", target: "building_managers", strength: 0.7 },
-        { source: "policymakers", target: "building_codes", strength: 0.9 },
-        { source: "policymakers", target: "lighting_problems", strength: 0.5 },
-        { source: "noise_levels", target: "temperature_humidity", strength: 0.8 },
-        { source: "air_quality", target: "temperature_humidity", strength: 0.4 },
-        { source: "lighting_problems", target: "residents", strength: 0.7 },
-        { source: "building_codes", target: "air_quality", strength: 0.8 },
-        { source: "ai_tool", target: "residents", strength: 0.9 },
-        { source: "ai_tool", target: "energy_advisors", strength: 0.6 },
-        { source: "ai_tool", target: "building_managers", strength: 0.5 },
-        { source: "ai_tool", target: "noise_levels", strength: 0.7 },
-        { source: "ai_tool", target: "building_codes", strength: 0.4 }
+        { source: "temperature", target: "relative_humidity", strength: 0.8 },
+        { source: "temperature", target: "air_quality", strength: 0.6 },
+        { source: "relative_humidity", target: "air_quality", strength: 0.7 },
+        { source: "noise", target: "temperature", strength: 0.9 },
+        { source: "noise", target: "lighting", strength: 0.8 },
+        { source: "lighting", target: "room_layout", strength: 0.6 },
+        { source: "room_layout", target: "temperature", strength: 0.7 },
+        { source: "psychological_factors", target: "temperature", strength: 0.9 },
+        { source: "psychological_factors", target: "noise", strength: 0.5 },
+        { source: "psychological_factors", target: "lighting", strength: 0.8 },
+        { source: "air_quality", target: "temperature", strength: 0.4 },
+        { source: "room_layout", target: "air_quality", strength: 0.7 },
+        { source: "ai_tool", target: "temperature", strength: 0.9 },
+        { source: "ai_tool", target: "relative_humidity", strength: 0.6 },
+        { source: "ai_tool", target: "air_quality", strength: 0.5 },
+        { source: "ai_tool", target: "noise", strength: 0.7 },
+        { source: "ai_tool", target: "lighting", strength: 0.4 },
+        { source: "ai_tool", target: "room_layout", strength: 0.6 },
+        { source: "ai_tool", target: "psychological_factors", strength: 0.8 },
+        { source: "users", target: "ai_tool", strength: 0.9 },
+        { source: "users", target: "temperature", strength: 0.7 },
+        { source: "users", target: "air_quality", strength: 0.6 },
+        { source: "users", target: "lighting", strength: 0.8 },
+        { source: "users", target: "psychological_factors", strength: 0.5 }
       ]
     };
 
@@ -167,7 +234,7 @@
 
     // Create force simulation for ANT
     const antSimulation = d3.forceSimulation(antData.nodes)
-      .force("link", d3.forceLink(antData.links).id(d => d.id).distance(100))
+      .force("link", d3.forceLink(antData.links).id(d => d.id).distance(200))
       .force("charge", d3.forceManyBody().strength(-300))
       .force("center", d3.forceCenter(antWidth / 2, antHeight / 2))
       .force("collision", d3.forceCollide().radius(25));
@@ -178,8 +245,9 @@
       .data(antData.links)
       .enter().append("line")
       .attr("class", "link")
-      .style("stroke", "#535453")
-      .style("stroke-width", d => d.strength * 3);
+      .style("stroke", "#666666")
+      .style("stroke-width", d => d.strength * 1.5)
+      .style("stroke-dasharray", "5,5");
 
     // Create nodes for ANT
     const antNode = antSvg.append("g")

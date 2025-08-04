@@ -13,7 +13,7 @@
       <li><a href="../../index.html">Home</a></li>
       <li><a href="../proposal/index.html">Proposal</a></li>
       <li><a href="../methodology/index.html">Methodology</a></li>
-      <li><a href="../experiments/index.html">Design Experiments</a></li>
+      <li><a href="../experiments/index.html">Workflow</a></li>
       <li><a href="index.html" class="active">AI Demo</a></li>
       
     </ul>
@@ -35,7 +35,7 @@
       <section class="section">
         <div class="floating-form-container">
           <div class="form-header">
-            <div class="form-icon">🏗️</div>
+            <div class="form-icon"></div>
             <h3>TELL US ABOUT YOUR BUILDING</h3>
             <div class="form-progress">
               <div class="progress-bar">
@@ -134,7 +134,7 @@
       <section class="section">
         <div class="floating-form-container room-drawing-section">
           <div class="form-header">
-            <div class="form-icon">🎨</div>
+            <div class="form-icon"></div>
             <h3>DRAW YOUR ROOM LAYOUT</h3>
             <div class="form-progress">
               <div class="progress-bar">
@@ -148,15 +148,16 @@
           <div class="room-drawing-container">
             <div class="drawing-tools">
               <button class="tool-btn active" data-tool="room">Draw Room</button>
+              <button class="tool-btn" data-tool="wall">Add Wall</button>
               <button class="tool-btn" data-tool="door">Add Door</button>
               <button class="tool-btn" data-tool="window">Add Window</button>
-              <button class="tool-btn" data-tool="opening">Add Opening</button>
+              <button class="tool-btn" data-tool="furniture">Add Furniture</button>
               <button class="tool-btn" data-tool="clear">Clear All</button>
             </div>
             
             <div class="canvas-container">
               <div class="top-view-indicator">
-                <span class="view-icon">👁️</span>
+                <span class="view-icon"></span>
                 <span class="view-text">TOP VIEW - Draw your room from above</span>
               </div>
               <canvas id="roomCanvas" width="600" height="400"></canvas>
@@ -168,6 +169,10 @@
                     <span>Room Shape</span>
                   </div>
                   <div class="legend-item">
+                    <div class="legend-color wall-color"></div>
+                    <span>Wall</span>
+                  </div>
+                  <div class="legend-item">
                     <div class="legend-color door-color"></div>
                     <span>Door</span>
                   </div>
@@ -176,8 +181,8 @@
                     <span>Window</span>
                   </div>
                   <div class="legend-item">
-                    <div class="legend-color opening-color"></div>
-                    <span>Opening</span>
+                    <div class="legend-color furniture-color"></div>
+                    <span>Furniture</span>
                   </div>
                 </div>
               </div>
@@ -307,6 +312,7 @@
         this.isDrawing = false;
         this.roomShape = [];
         this.elements = [];
+        this.gridSize = 20; // Grid size for snapping
         this.init();
       }
 
@@ -320,6 +326,37 @@
         this.ctx.strokeStyle = '#2A3A20';
         this.ctx.lineWidth = 2;
         this.ctx.fillStyle = 'rgba(42, 58, 32, 0.1)';
+        this.drawGrid();
+      }
+
+      drawGrid() {
+        this.ctx.save();
+        this.ctx.strokeStyle = '#e0e0e0';
+        this.ctx.lineWidth = 0.5;
+        
+        // Draw vertical lines
+        for (let x = 0; x <= this.canvas.width; x += this.gridSize) {
+          this.ctx.beginPath();
+          this.ctx.moveTo(x, 0);
+          this.ctx.lineTo(x, this.canvas.height);
+          this.ctx.stroke();
+        }
+        
+        // Draw horizontal lines
+        for (let y = 0; y <= this.canvas.height; y += this.gridSize) {
+          this.ctx.beginPath();
+          this.ctx.moveTo(0, y);
+          this.ctx.lineTo(this.canvas.width, y);
+          this.ctx.stroke();
+        }
+        
+        this.ctx.restore();
+      }
+
+      snapToGrid(x, y) {
+        const snappedX = Math.round(x / this.gridSize) * this.gridSize;
+        const snappedY = Math.round(y / this.gridSize) * this.gridSize;
+        return {x: snappedX, y: snappedY};
       }
 
       setupEventListeners() {
@@ -350,9 +387,11 @@
           const rect = this.canvas.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
-          this.roomShape = [{x, y}];
+          const snapped = this.snapToGrid(x, y);
+          this.roomShape = [snapped];
           this.ctx.beginPath();
-          this.ctx.moveTo(x, y);
+          this.ctx.moveTo(snapped.x, snapped.y);
+          this.lastPoint = snapped;
         }
       }
 
@@ -361,9 +400,15 @@
           const rect = this.canvas.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
-          this.roomShape.push({x, y});
-          this.ctx.lineTo(x, y);
-          this.ctx.stroke();
+          const snapped = this.snapToGrid(x, y);
+          
+          // Only add point if it's different from last point
+          if (snapped.x !== this.lastPoint.x || snapped.y !== this.lastPoint.y) {
+            this.roomShape.push(snapped);
+            this.ctx.lineTo(snapped.x, snapped.y);
+            this.ctx.stroke();
+            this.lastPoint = snapped;
+          }
         }
       }
 
@@ -397,27 +442,51 @@
 
       drawElement(element) {
         this.ctx.save();
+        this.ctx.strokeStyle = '#000000';
+        this.ctx.lineWidth = 2;
         
         switch(element.type) {
+          case 'wall':
+            // Wall line
+            this.ctx.lineWidth = 3;
+            this.ctx.beginPath();
+            this.ctx.moveTo(element.x - 20, element.y);
+            this.ctx.lineTo(element.x + 20, element.y);
+            this.ctx.stroke();
+            break;
           case 'door':
-            this.ctx.fillStyle = '#8B4513';
-            this.ctx.fillRect(element.x - 10, element.y - 15, 20, 30);
-            this.ctx.strokeStyle = '#654321';
-            this.ctx.strokeRect(element.x - 10, element.y - 15, 20, 30);
+            // Door opening (gap in wall)
+            this.ctx.lineWidth = 1;
+            this.ctx.strokeRect(element.x - 8, element.y - 12, 16, 24);
+            // Door swing arc
+            this.ctx.beginPath();
+            this.ctx.arc(element.x - 8, element.y - 12, 6, 0, Math.PI/2);
+            this.ctx.stroke();
             break;
           case 'window':
-            this.ctx.fillStyle = '#87CEEB';
-            this.ctx.fillRect(element.x - 12, element.y - 12, 24, 24);
-            this.ctx.strokeStyle = '#4682B4';
-            this.ctx.strokeRect(element.x - 12, element.y - 12, 24, 24);
-            break;
-          case 'opening':
-            this.ctx.fillStyle = '#F0E68C';
+            // Window opening
+            this.ctx.lineWidth = 1;
+            this.ctx.strokeRect(element.x - 10, element.y - 10, 20, 20);
+            // Window mullions
             this.ctx.beginPath();
-            this.ctx.arc(element.x, element.y, 12, 0, 2 * Math.PI);
-            this.ctx.fill();
-            this.ctx.strokeStyle = '#DAA520';
+            this.ctx.moveTo(element.x - 10, element.y);
+            this.ctx.lineTo(element.x + 10, element.y);
+            this.ctx.moveTo(element.x, element.y - 10);
+            this.ctx.lineTo(element.x, element.y + 10);
             this.ctx.stroke();
+            break;
+          case 'furniture':
+            // Furniture rectangle
+            this.ctx.lineWidth = 1;
+            this.ctx.strokeRect(element.x - 15, element.y - 10, 30, 20);
+            // Furniture fill pattern
+            this.ctx.lineWidth = 0.5;
+            for (let i = 0; i < 3; i++) {
+              this.ctx.beginPath();
+              this.ctx.moveTo(element.x - 15, element.y - 10 + i * 5);
+              this.ctx.lineTo(element.x + 15, element.y - 10 + i * 5);
+              this.ctx.stroke();
+            }
             break;
         }
         
@@ -429,6 +498,7 @@
         this.roomShape = [];
         this.elements = [];
         this.setupCanvas();
+        this.drawGrid();
       }
 
       getRoomData() {
