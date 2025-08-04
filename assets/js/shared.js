@@ -33,15 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Add enhanced page transition to navigation links
-    const navLinksWithTransition = document.querySelectorAll('.main-nav a[href*="pages/"]');
-    navLinksWithTransition.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const href = this.getAttribute('href');
-            pageTransition.transitionTo(href);
-        });
-    });
+
 
     // Enhanced hover effects with blob-like animations
     const featureCards = document.querySelectorAll('.feature-card');
