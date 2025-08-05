@@ -5,44 +5,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Methodology - AI Home Science Platform</title>
   <link rel="stylesheet" href="../../assets/css/shared.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <nav class="main-nav">
     <ul>
-      <li><a href="../../index.html">Home</a></li>
+      <li><a href="../../index.html">Inspiration</a></li>
+      <li><a href="../research-background/index.html">Research Background</a></li>
       <li><a href="../proposal/index.html">Proposal</a></li>
       <li><a href="index.html" class="active">Methodology</a></li>
-      <li><a href="../experiments/index.html">Workflow</a></li>
-      <li><a href="../demo/index.html">AI Demo</a></li>
+      <li><a href="../experiments/index.html">Computational Design Experiments</a></li>
+      <li><a href="../demo/index.html">AI Power Solution</a></li>
       
     </ul>
   </nav>
 
   <main>
     <div class="page-content">
-      <section class="section">
-        <h3>INTERSECTING FIELDS</h3>
+      <section class="section section-moved-up">
+        <h3>WHY IS INDOOR COMFORTNESS IMPORTANT? WHY SHOULD WE BE AWARE OF?</h3>
+        <p>According to the research: <a href="https://healthybuildings.hsph.harvard.edu/new-thoughts-on-characterizing-indoor-thermal-conditions-for-human-health-outcomes/" target="_blank">New thoughts on characterizing indoor thermal conditions for human health outcomes</a>, indoor thermal conditions have a prominent influence on occupant health, performance, and satisfaction. However, to maintain comfortable thermal conditions that support occupants and their activity, buildings require substantial amounts of energy.</p>
         
-        <h4>1. Computational Building Science</h4>
-        <p><strong>Examples:</strong> comfort simulation, daylighting</p>
-        
-        <h4>2. Web/ App Interface Development (Visual Representations)</h4>
-        
-        <h4>3. Architectural Space/ Building Modeling</h4>
-        
-        <h4>4. Building Science</h4>
-        <p><strong>Examples:</strong> building performance, building envelope strategies</p>
+        <div class="diagram-container">
+          <img src="../../indoor-comfort-research.png" alt="Indoor Comfort Research" style="width: 100%; max-width: 960px; height: auto;">
+        </div>
       </section>
-      
+
       <section class="section">
-        <h3>KEYWORDS</h3>
-        <p>1. Citizen Science<br>
-        2. AI Feedback Systems<br>
-        3. High Performance Building<br>
-        4. Passive House Strategies<br>
-        5. Indoor Thermal Comfort</p>
+        <h3>WHY WE FEEL UNCOMFORTABLE IN THE SPACE?</h3>
+        <div class="ant-diagram-container">
+          <div class="diagram-wrapper">
+            <svg id="ant-graph" width="600" height="450"></svg>
+          </div>
+        </div>
+        
+        <div class="discomfort-factors">
+          <div class="factor-group">
+            <h4>Temperature & Humidity:</h4>
+            <ul>
+              <li>Room feels too hot or too cold throughout the day</li>
+              <li>Drafts from windows, doors, or vents</li>
+              <li>Humidity feels too high (sticky, musty)</li>
+              <li>Air feels too dry (dry skin, dry throat, static)</li>
+            </ul>
+          </div>
+          
+          <div class="factor-group">
+            <h4>Air Quality</h4>
+            <ul>
+              <li>Air feels stale or stuffy</li>
+              <li>Frequent dust buildup or visible mold</li>
+              <li>Unpleasant odors from cooking, smoke, or chemicals</li>
+              <li>Allergies or respiratory symptoms indoors</li>
+              <li>No access to fresh outdoor air or filtered ventilation</li>
+            </ul>
+          </div>
+          
+          <div class="factor-group">
+            <h4>Noise</h4>
+            <ul>
+              <li>Loud or constant noise from outside (traffic, neighbors, sirens)</li>
+              <li>Mechanical noise from HVAC, plumbing, or appliances</li>
+              <li>Noise disrupts sleep, work, or relaxation</li>
+            </ul>
+          </div>
+          
+          <div class="factor-group">
+            <h4>Lighting</h4>
+            <ul>
+              <li>Not enough natural daylight</li>
+              <li>Artificial lighting is too harsh or too dim</li>
+              <li>Glare on screens or reflective surfaces</li>
+              <li>No task lighting in key areas (kitchen, desk, reading)</li>
+            </ul>
+          </div>
+          
+          <div class="factor-group">
+            <h4>Layout & Spatial Issues</h4>
+            <ul>
+              <li>Space feels cramped or cluttered</li>
+              <li>Limited storage or furniture placement causes frustration</li>
+              <li>Room use does not match lifestyle needs (e.g. no work zone)</li>
+              <li>Poor access or circulation within rooms</li>
+            </ul>
+          </div>
+          
+          <div class="factor-group">
+            <h4>Psychological & Control Factors</h4>
+            <ul>
+              <li>Cannot adjust temperature, airflow, or lighting easily</li>
+              <li>Feelings of lack of privacy or control over the environment</li>
+              <li>Building systems feel confusing, unresponsive, or inaccessible</li>
+              <li>Space feels unsafe or disconnected from personal needs</li>
+            </ul>
+          </div>
+        </div>
       </section>
+
+
       
       <section class="section">
         <h3>KEY SOLUTIONS DATA THAT I CAN FEED INTO MY AI TOOL</h3>
@@ -109,5 +169,127 @@
   </footer>
 
   <script src="../../assets/js/shared.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    // ANT Diagram for Discomfort Factors
+    const antData = {
+      nodes: [
+        { id: "temperature", name: "Temperature", group: "environment", x: 200, y: 300 },
+        { id: "relative_humidity", name: "Relative Humidity", group: "environment", x: 400, y: 200 },
+        { id: "air_quality", name: "Air Quality", group: "environment", x: 600, y: 300 },
+        { id: "noise", name: "Noise", group: "environment", x: 400, y: 400 },
+        { id: "lighting", name: "Lighting", group: "environment", x: 300, y: 150 },
+        { id: "room_layout", name: "Room Layout (Spatial Design)", group: "environment", x: 500, y: 150 },
+        { id: "psychological_factors", name: "Psychological & Control Factors", group: "human", x: 100, y: 200 },
+        { id: "users", name: "Users", group: "human", x: 800, y: 300 },
+        { id: "ai_tool", name: "AI Energy Advisor", group: "technology", x: 700, y: 200 }
+      ],
+      links: [
+        { source: "temperature", target: "relative_humidity", strength: 0.8 },
+        { source: "temperature", target: "air_quality", strength: 0.6 },
+        { source: "relative_humidity", target: "air_quality", strength: 0.7 },
+        { source: "noise", target: "temperature", strength: 0.9 },
+        { source: "noise", target: "lighting", strength: 0.8 },
+        { source: "lighting", target: "room_layout", strength: 0.6 },
+        { source: "room_layout", target: "temperature", strength: 0.7 },
+        { source: "room_layout", target: "air_quality", strength: 0.5 },
+        { source: "psychological_factors", target: "temperature", strength: 0.8 },
+        { source: "psychological_factors", target: "lighting", strength: 0.7 },
+        { source: "psychological_factors", target: "noise", strength: 0.6 },
+        { source: "ai_tool", target: "psychological_factors", strength: 0.8 },
+        { source: "users", target: "ai_tool", strength: 0.9 },
+        { source: "users", target: "temperature", strength: 0.7 },
+        { source: "users", target: "air_quality", strength: 0.6 },
+        { source: "users", target: "lighting", strength: 0.8 },
+        { source: "users", target: "psychological_factors", strength: 0.5 }
+      ]
+    };
+
+    // Set up the simulation
+    const antSimulation = d3.forceSimulation(antData.nodes)
+      .force("link", d3.forceLink(antData.links).id(d => d.id).distance(200))
+      .force("charge", d3.forceManyBody().strength(-300))
+      .force("center", d3.forceCenter(300, 225))
+      .force("collide", d3.forceCollide().radius(50));
+
+    // Create the SVG container
+    const antSvg = d3.select("#ant-graph");
+    const antWidth = 600;
+    const antHeight = 450;
+
+    // Add the links
+    const antLink = antSvg.append("g")
+      .selectAll("line")
+      .data(antData.links)
+      .enter().append("line")
+      .attr("class", "link")
+      .style("stroke", "#666666")
+      .style("stroke-width", d => d.strength * 1.5)
+      .style("stroke-dasharray", "5,5");
+
+    // Add the nodes
+    const antNode = antSvg.append("g")
+      .selectAll("g")
+      .data(antData.nodes)
+      .enter().append("g")
+      .attr("class", "node")
+      .call(d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended));
+
+    // Add circles to nodes
+    antNode.append("circle")
+      .attr("r", 8)
+      .style("fill", d => {
+        switch(d.group) {
+          case "environment": return "#8BB3E8";
+          case "human": return "#B3CFB9";
+          case "technology": return "#F76841";
+          default: return "#8BB3E8";
+        }
+      })
+      .style("stroke", "#2A3A20")
+      .style("stroke-width", 2);
+
+    // Add labels to nodes
+    antNode.append("text")
+      .text(d => d.name)
+      .attr("x", 12)
+      .attr("dy", ".35em")
+      .style("font-size", "10px")
+      .style("font-weight", "bold")
+      .style("fill", "#2A3A20");
+
+    // Update positions on simulation tick
+    antSimulation.on("tick", () => {
+      antLink
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
+
+      antNode
+        .attr("transform", d => `translate(${d.x},${d.y})`);
+    });
+
+    // Drag functions
+    function dragstarted(event, d) {
+      if (!event.active) antSimulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    function dragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+
+    function dragended(event, d) {
+      if (!event.active) antSimulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+  </script>
 </body>
 </html> 

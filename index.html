@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI Home Science Platform - Thermal Grammar</title>
   <link rel="stylesheet" href="assets/css/shared.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
@@ -28,11 +28,12 @@
 
   <nav class="main-nav">
     <ul>
-      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="index.html" class="active">Inspiration</a></li>
+      <li><a href="pages/research-background/index.html">Research Background</a></li>
       <li><a href="pages/proposal/index.html">Proposal</a></li>
       <li><a href="pages/methodology/index.html">Methodology</a></li>
-      <li><a href="pages/experiments/index.html">Workflow</a></li>
-      <li><a href="pages/demo/index.html">AI Demo</a></li>
+      <li><a href="pages/experiments/index.html">Computational Design Experiments</a></li>
+      <li><a href="pages/demo/index.html">AI Power Solution</a></li>
       
     </ul>
   </nav>
@@ -40,97 +41,61 @@
   <main>
     <div class="page-content">
       <section class="section">
-        <h3>WHAT IS IT?</h3>
-        <p>A computational design project that uses AI tools to translate architectural thermal behavior into accessible, localized energy guidance.</p>
-        <p>+ platform where users can upload their own data and share personalized energy reports with others.</p>
-      </section>
-
-      <section class="section">
-        <h3>DESIGN INTENTION</h3>
-        <p>Many urban residents have limited control over essential building systems such as HVAC, windows, and insulation, yet they are the ones most affected by high energy costs and uncomfortable indoor conditions. While energy modeling tools exist for new construction, residents of older or rental housing, especially in dense cities like New York or Los Angeles, often lack access to useful data, performance feedback, or strategies to improve their living environments.</p>
-        
-        <p>This project introduces a AI-powered tool designed to help everyday occupants better understand and enhance the energy performance of their buildings. Drawing on fundamental building science principles, including heat transfer, solar exposure, ventilation, and envelope behavior, the tool aims to make energy literacy more accessible and actionable for a broader public.</p>
-        
-        <p>After receiving personalized energy insights, users can choose whether to share their data with the platform. If they opt in, others can view their project information and learn from real-world examples, helping to foster a collaborative, citizen-driven approach to improving home energy.</p>
-      </section>
-
-      <section class="section">
-        <h3>WHY WE FEEL UNCOMFORTABLE IN THE SPACE?</h3>
-        <div class="ant-diagram-container">
-          <div class="diagram-wrapper">
-            <svg id="ant-graph" width="600" height="450"></svg>
-          </div>
+        <div class="diagram-container">
+          <img src="Inspiration.svg" alt="" style="width: 150%; max-width: 1440px; height: auto; margin-left: -25%;">
         </div>
-        
-        <div class="discomfort-factors">
-          <div class="factor-group">
-            <h4>Temperature & Humidity:</h4>
-            <ul>
-              <li>Room feels too hot or too cold throughout the day</li>
-              <li>Drafts from windows, doors, or vents</li>
-              <li>Humidity feels too high (sticky, musty)</li>
-              <li>Air feels too dry (dry skin, dry throat, static)</li>
-            </ul>
+      </section>
+
+      <section class="section">
+        <div class="diagram-container">
+          <img src="Image.svg" alt="Research Image" style="width: 150%; max-width: 1440px; height: auto; margin-left: -25%;">
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>SINCE THE CLIMATE CHANGE SIGNIFICANTLY RISE OVER THE PAST TEN YEARS</h3>
+        <div class="diagram-container">
+          <img src="Capstone Project Content.svg" alt="Temperature Change in NYC from 2015 to 2025" style="width: 150%; max-width: 1440px; height: auto; margin-left: -25%;">
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>ALSO, THE INCREASE AMOUNT HYBRID AND FULLY REMOTE JOB</h3>
+        <div class="diagram-container">
+          <img src="https://cdn.prod.website-files.com/6442419dcf656a81da76b503/66ddabac1b879fdba2678e95_6534c26031ddee29ac1e18b0_hybrid-remote-work-statistics.webp" alt="Hybrid and Remote Work Statistics" style="width: 100%; max-width: 960px; height: auto;">
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>WE ARE NOW FACING THE INCREASING ENERGY DEMAND FOR THE RESIDENTIAL NEIGHBORHOOD IN THE CITY</h3>
+      </section>
+
+      <section class="section">
+        <h3>ESTIMATED BLOCK LEVEL ANNUAL ENERGY CONSUMPTION IN NYC</h3>
+        <div class="website-preview-container">
+          <div class="preview-header">
+            <h4>Columbia University Energy Consumption Map</h4>
+            <p>Interactive map showing estimated total annual building energy consumption at the block and lot level for New York City</p>
+            <a href="https://qsel.columbia.edu/nycenergy/" target="_blank" class="preview-link">View Full Website →</a>
           </div>
-          
-          <div class="factor-group">
-            <h4>Air Quality</h4>
-            <ul>
-              <li>Air feels stale or stuffy</li>
-              <li>Frequent dust buildup or visible mold</li>
-              <li>Unpleasant odors from cooking, smoke, or chemicals</li>
-              <li>Allergies or respiratory symptoms indoors</li>
-              <li>No access to fresh outdoor air or filtered ventilation</li>
-            </ul>
+          <div class="preview-canvas">
+            <iframe src="https://qsel.columbia.edu/nycenergy/" 
+                    width="100%" 
+                    height="600" 
+                    frameborder="0" 
+                    scrolling="no"
+                    title="NYC Energy Consumption Map">
+              <p>Your browser does not support iframes. <a href="https://qsel.columbia.edu/nycenergy/" target="_blank">Click here to view the energy consumption map</a></p>
+            </iframe>
           </div>
-          
-          <div class="factor-group">
-            <h4>Noise</h4>
-            <ul>
-              <li>Loud or constant noise from outside (traffic, neighbors, sirens)</li>
-              <li>Mechanical noise from HVAC, plumbing, or appliances</li>
-              <li>Noise disrupts sleep, work, or relaxation</li>
-            </ul>
-          </div>
-          
-          <div class="factor-group">
-            <h4>Lighting</h4>
-            <ul>
-              <li>Not enough natural daylight</li>
-              <li>Artificial lighting is too harsh or too dim</li>
-              <li>Glare on screens or reflective surfaces</li>
-              <li>No task lighting in key areas (kitchen, desk, reading)</li>
-            </ul>
-          </div>
-          
-          <div class="factor-group">
-            <h4>Layout & Spatial Issues</h4>
-            <ul>
-              <li>Space feels cramped or cluttered</li>
-              <li>Limited storage or furniture placement causes frustration</li>
-              <li>Room use does not match lifestyle needs (e.g. no work zone)</li>
-              <li>Poor access or circulation within rooms</li>
-            </ul>
-          </div>
-          
-          <div class="factor-group">
-            <h4>Psychological & Control Factors</h4>
-            <ul>
-              <li>Cannot adjust temperature, airflow, or lighting easily</li>
-              <li>Feelings of lack of privacy or control over the environment</li>
-              <li>Building systems feel confusing, unresponsive, or inaccessible</li>
-              <li>Space feels unsafe or disconnected from personal needs</li>
-            </ul>
+          <div class="preview-description">
+            <p><strong>Data Source:</strong> Spatial distribution of urban building energy consumption by end use (Howard, Parshall, Thompson, Hammer, Dickinson, Modi)</p>
+            <p><strong>Features:</strong> Hover over blocks/lots for detailed energy data, click to update pie charts, view electricity and fuel consumption per square meter</p>
           </div>
         </div>
       </section>
 
-      <section class="section section-moved-up">
-        <h3>WHY IS INDOOR COMFORTNESS IMPORTANT? WHY SHOULD WE BE AWARE OF?</h3>
-        <p>According to the research: <a href="https://healthybuildings.hsph.harvard.edu/new-thoughts-on-characterizing-indoor-thermal-conditions-for-human-health-outcomes/" target="_blank">New thoughts on characterizing indoor thermal conditions for human health outcomes</a>, indoor thermal conditions have a prominent influence on occupant health, performance, and satisfaction. However, to maintain comfortable thermal conditions that support occupants and their activity, buildings require substantial amounts of energy.</p>
-      </section>
-
-      <section class="section section-moved-up">
+      <section class="section">
         <h3>ESTIMATED 10-YEAR HISTORY OF AVERAGE ELECTRIC BILL</h3>
         <div class="energy-bill-chart">
           <h4>Central Hudson Average Monthly Bills (2016–2024)</h4>
@@ -138,33 +103,23 @@
         </div>
       </section>
 
-      <section class="section section-moved-up">
-        <h3>WHAT ARE THE FACTORS THAT AFFECT ENERGY BILL?</h3>
-        <div class="factors-text">
-          <h4>Increase Electricity rates</h4>
-          <p>Rates fluctuate seasonally and tend to rise during summer and winter due to higher demand for heating and cooling.</p>
-          
-          <h4>Energy usage has increased</h4>
-          <p>Higher electricity consumption leads directly to a higher bill.</p>
-          
-          <h4>Energy plan may not match usage needs</h4>
-          <p>In deregulated markets, plans vary. High-usage homes need different plans than low-usage ones. Choosing the wrong plan can cost more.</p>
-          
-          <h4>Extreme weather or temperature spikes</h4>
-          <p>Sudden increases in demand during weather extremes can drive prices higher.</p>
-          
-          <h4>Home maintenance issues</h4>
-          <p>Poor insulation, air leaks, or an overworked HVAC system increase energy use.</p>
-          
-          <h4>Old or inefficient appliances</h4>
-          <p>Older devices often use more energy. ENERGY STAR–certified appliances are more efficient and cost-effective.</p>
-        </div>
+      <section class="section">
+        <h3>RESEARCH QUESTION</h3>
+        <p>How can we make building science accessible to everyday New Yorkers, and turn passive discomfort into informed, local action?</p>
       </section>
+
+      <section class="section">
+        <h3>DESIGN INTENTION</h3>
+        <p>My project addresses a growing problem in our built environment: the energy literacy gap. Many New York City residents—especially renters and those living in older buildings—face high energy bills and uncomfortable living conditions, yet they have little access to professional tools or data that could help them understand or improve their environment.</p>
+        
+        <p>While energy modeling tools exist for new construction, residents of older or rental housing often lack access to useful data, performance feedback, or strategies to improve their living environments. This project introduces an AI-powered tool designed to help everyday occupants better understand and enhance the energy performance of their buildings.</p>
+        
+        <p>Drawing on fundamental building science principles—including heat transfer, solar exposure, ventilation, and envelope behavior—the tool aims to make energy literacy more accessible and actionable for a broader public. After receiving personalized energy insights, users can choose whether to share their data with the platform, fostering a collaborative, citizen-driven approach to improving home energy.</p>
+      </section>
+
+
       
-      <section class="section section-moved-up">
-        <h3>RHETORIC ARGUMENT</h3>
-        <p>This project challenges the idea that knowledge about energy and thermal comfort should be limited to experts. By using design to translate complex building and environmental data into simple, visual feedback, it makes energy impact understandable and accessible to everyone.</p>
-      </section>
+
     </div>
   </main>
 
@@ -761,5 +716,7 @@
       resizeCanvas(windowWidth, windowHeight);
     }
   </script>
+
+
 </body>
 </html>
